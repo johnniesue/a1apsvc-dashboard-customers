@@ -10,10 +10,17 @@ form.addEventListener("submit", function(e) {
 
   const customer = {
     id: id ? parseInt(id) : Date.now(),
-    name: formData.get("name"),
-    phone: formData.get("phone"),
+    firstName: formData.get("firstName"),
+    lastName: formData.get("lastName"),
+    company: formData.get("company"),
+    address: formData.get("address"),
+    mobile: formData.get("mobile"),
+    home: formData.get("home"),
+    work: formData.get("work"),
     email: formData.get("email"),
-    address: formData.get("address")
+    type: formData.get("type"),
+    source: formData.get("source"),
+    notes: formData.get("notes")
   };
 
   if (id) {
@@ -33,10 +40,17 @@ function loadCustomers() {
   customers.forEach(customer => {
     const row = document.createElement("tr");
     row.innerHTML = `
-      <td>${customer.name}</td>
-      <td>${customer.phone}</td>
-      <td>${customer.email}</td>
+      <td>${customer.firstName}</td>
+      <td>${customer.lastName}</td>
+      <td>${customer.company}</td>
       <td>${customer.address}</td>
+      <td>${customer.mobile}</td>
+      <td>${customer.home}</td>
+      <td>${customer.work}</td>
+      <td>${customer.email}</td>
+      <td>${customer.type}</td>
+      <td>${customer.source}</td>
+      <td>${customer.notes}</td>
       <td>
         <button class="edit" onclick="editCustomer(${customer.id})">Edit</button>
         <button class="delete" onclick="deleteCustomer(${customer.id})">Delete</button>
@@ -51,10 +65,17 @@ function editCustomer(id) {
   const customer = customers.find(c => c.id === id);
   if (!customer) return;
 
-  form.name.value = customer.name;
-  form.phone.value = customer.phone;
-  form.email.value = customer.email;
+  form.firstName.value = customer.firstName;
+  form.lastName.value = customer.lastName;
+  form.company.value = customer.company;
   form.address.value = customer.address;
+  form.mobile.value = customer.mobile;
+  form.home.value = customer.home;
+  form.work.value = customer.work;
+  form.email.value = customer.email;
+  form.type.value = customer.type;
+  form.source.value = customer.source;
+  form.notes.value = customer.notes;
   form.id.value = customer.id;
 }
 
@@ -65,54 +86,4 @@ function deleteCustomer(id) {
   loadCustomers();
 }
 
-function exportCustomers() {
-  const customers = JSON.parse(localStorage.getItem("customers") || "[]");
-  const blob = new Blob([JSON.stringify(customers, null, 2)], { type: "application/json" });
-  const link = document.createElement("a");
-  link.href = URL.createObjectURL(blob);
-  link.download = "customers.json";
-  link.click();
-}
-
-function importCustomers(event) {
-  const file = event.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    try {
-      const data = JSON.parse(e.target.result);
-      if (Array.isArray(data)) {
-        localStorage.setItem("customers", JSON.stringify(data));
-        loadCustomers();
-        alert("Customers imported successfully.");
-      } else {
-        alert("Invalid format: expected an array.");
-      }
-    } catch (err) {
-      alert("Failed to import: " + err.message);
-    }
-  };
-  reader.readAsText(file);
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  loadCustomers();
-
-  const exportBtn = document.createElement("button");
-  exportBtn.textContent = "Export All Customers";
-  exportBtn.style.marginTop = "10px";
-  exportBtn.onclick = exportCustomers;
-
-  const importInput = document.createElement("input");
-  importInput.type = "file";
-  importInput.accept = "application/json";
-  importInput.style.marginLeft = "10px";
-  importInput.onchange = importCustomers;
-
-  const container = document.createElement("div");
-  container.style.marginTop = "20px";
-  container.appendChild(exportBtn);
-  container.appendChild(importInput);
-
-  document.querySelector(".main").appendChild(container);
-});
+document.addEventListener("DOMContentLoaded", loadCustomers);

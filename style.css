@@ -13,12 +13,9 @@ body {
   left: 0;
   bottom: 0;
   padding: 20px;
-  box-sizing: border-box;
 }
 .sidebar h2 {
   color: #fff;
-  font-size: 20px;
-  margin-bottom: 30px;
 }
 .sidebar ul {
   list-style: none;
@@ -38,8 +35,8 @@ body {
   padding: 20px;
 }
 form input, form button {
-  margin-right: 10px;
-  margin-bottom: 10px;
+  display: inline-block;
+  margin: 5px;
   padding: 8px;
   font-size: 14px;
 }
@@ -57,20 +54,17 @@ table, th, td {
   border: 1px solid #444;
 }
 th, td {
-  padding: 10px;
-  text-align: left;
+  padding: 8px;
 }
 button.edit {
   background: #ffaa00;
-  border: none;
   color: white;
-  padding: 5px 10px;
-  cursor: pointer;
+  border: none;
+  padding: 4px 8px;
 }
 button.delete {
   background: #ff4c4c;
-  border: none;
   color: white;
-  padding: 5px 10px;
-  cursor: pointer;
+  border: none;
+  padding: 4px 8px;
 }
