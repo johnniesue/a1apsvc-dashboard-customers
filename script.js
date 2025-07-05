@@ -1,149 +1,104 @@
 
-const form = document.getElementById("customerForm");
+const saveBtn = document.getElementById("saveBtn");
+const exportBtn = document.getElementById("exportBtn");
+const importBtn = document.getElementById("importBtn");
+const importFile = document.getElementById("importFile");
 const tableBody = document.querySelector("#customerTable tbody");
 
-form.addEventListener("submit", function(e) {
-  e.preventDefault();
-  const formData = new FormData(form);
-  const id = formData.get("id");
-  let customers = JSON.parse(localStorage.getItem("customers") || "[]");
+let customers = JSON.parse(localStorage.getItem("customers") || "[]");
 
-  const customer = {
-    id: id ? parseInt(id) : Date.now(),
-    firstName: formData.get("firstName") || "",
-    lastName: formData.get("lastName") || "",
-    company: formData.get("company") || "",
-    address: formData.get("address") || "",
-    mobile: formData.get("mobile") || "",
-    home: formData.get("home") || "",
-    work: formData.get("work") || "",
-    email: formData.get("email") || "",
-    type: formData.get("type") || "",
-    source: formData.get("source") || "",
-    notes: formData.get("notes") || ""
-  };
-
-  if (id) {
-    customers = customers.map(c => c.id === customer.id ? customer : c);
-  } else {
-    customers.push(customer);
-  }
-
+function saveCustomerList() {
   localStorage.setItem("customers", JSON.stringify(customers));
-  form.reset();
-  loadCustomers();
-});
+  renderTable();
+}
 
-function loadCustomers() {
-  const customers = JSON.parse(localStorage.getItem("customers") || "[]");
+function renderTable() {
   tableBody.innerHTML = "";
-  customers.forEach(customer => {
-    const safeAddress = customer.address ? customer.address.replace(/"/g, '&quot;') : "";
-    const mapLink = \`https://www.google.com/maps/search/\${encodeURIComponent(safeAddress)}\`;
+  customers.forEach((c, i) => {
     const row = document.createElement("tr");
-    row.innerHTML = `
-      <td>\${customer.firstName}</td>
-      <td>\${customer.lastName}</td>
-      <td>\${customer.company}</td>
-      <td><a href="\${mapLink}" target="_blank" rel="noopener noreferrer">\${customer.address}</a></td>
-      <td>\${customer.mobile}</td>
-      <td>\${customer.home}</td>
-      <td>\${customer.work}</td>
-      <td>\${customer.email}</td>
-      <td>\${customer.type}</td>
-      <td>\${customer.source}</td>
-      <td>\${customer.notes}</td>
+    row.innerHTML = \`
+      <td>\${c.firstName}</td><td>\${c.lastName}</td><td>\${c.company}</td>
+      <td><a href="https://maps.google.com/?q=\${encodeURIComponent(c.address)}" target="_blank">\${c.address}</a></td>
+      <td>\${c.mobile}</td><td>\${c.home}</td><td>\${c.work}</td><td>\${c.email}</td>
+      <td>\${c.type}</td><td>\${c.source}</td><td>\${c.notes}</td>
       <td>
-        <button class="edit" onclick="editCustomer(\${customer.id})">Edit</button>
-        <button class="delete" onclick="deleteCustomer(\${customer.id})">Delete</button>
+        <button onclick="editCustomer(\${i})">Edit</button>
+        <button onclick="deleteCustomer(\${i})">Delete</button>
       </td>
-    `;
+    \`;
     tableBody.appendChild(row);
   });
 }
 
-function editCustomer(id) {
-  const customers = JSON.parse(localStorage.getItem("customers") || "[]");
-  const customer = customers.find(c => c.id === id);
-  if (!customer) return;
-
-  form.firstName.value = customer.firstName;
-  form.lastName.value = customer.lastName;
-  form.company.value = customer.company;
-  form.address.value = customer.address;
-  form.mobile.value = customer.mobile;
-  form.home.value = customer.home;
-  form.work.value = customer.work;
-  form.email.value = customer.email;
-  form.type.value = customer.type;
-  form.source.value = customer.source;
-  form.notes.value = customer.notes;
-  form.id.value = customer.id;
+function clearForm() {
+  document.querySelectorAll(".form-container input").forEach(input => input.value = "");
 }
 
-function deleteCustomer(id) {
-  let customers = JSON.parse(localStorage.getItem("customers") || "[]");
-  customers = customers.filter(c => c.id !== id);
-  localStorage.setItem("customers", JSON.stringify(customers));
-  loadCustomers();
+saveBtn.onclick = () => {
+  const customer = {
+    firstName: document.querySelector('input[name="firstName"]').value.trim(),
+    lastName: document.querySelector('input[name="lastName"]').value.trim(),
+    company: document.querySelector('input[name="company"]').value.trim(),
+    address: document.querySelector('input[name="address"]').value.trim(),
+    mobile: document.querySelector('input[name="mobile"]').value.trim(),
+    home: document.querySelector('input[name="home"]').value.trim(),
+    work: document.querySelector('input[name="work"]').value.trim(),
+    email: document.querySelector('input[name="email"]').value.trim(),
+    type: document.querySelector('input[name="type"]').value.trim(),
+    source: document.querySelector('input[name="source"]').value.trim(),
+    notes: document.querySelector('input[name="notes"]').value.trim()
+  };
+  customers.push(customer);
+  saveCustomerList();
+  clearForm();
+};
+
+function deleteCustomer(index) {
+  customers.splice(index, 1);
+  saveCustomerList();
 }
 
-function exportCustomers() {
-  const customers = JSON.parse(localStorage.getItem("customers") || "[]");
+function editCustomer(index) {
+  const c = customers[index];
+  document.querySelector('input[name="firstName"]').value = c.firstName;
+  document.querySelector('input[name="lastName"]').value = c.lastName;
+  document.querySelector('input[name="company"]').value = c.company;
+  document.querySelector('input[name="address"]').value = c.address;
+  document.querySelector('input[name="mobile"]').value = c.mobile;
+  document.querySelector('input[name="home"]').value = c.home;
+  document.querySelector('input[name="work"]').value = c.work;
+  document.querySelector('input[name="email"]').value = c.email;
+  document.querySelector('input[name="type"]').value = c.type;
+  document.querySelector('input[name="source"]').value = c.source;
+  document.querySelector('input[name="notes"]').value = c.notes;
+  customers.splice(index, 1);
+}
+
+exportBtn.onclick = () => {
   const blob = new Blob([JSON.stringify(customers, null, 2)], { type: "application/json" });
-  const link = document.createElement("a");
-  link.href = URL.createObjectURL(blob);
-  link.download = "customers.json";
-  link.click();
-}
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "customers.json";
+  a.click();
+  URL.revokeObjectURL(url);
+};
 
-document.addEventListener("DOMContentLoaded", loadCustomers);
-
-function importCustomers(event) {
-  const file = event.target.files[0];
-  if (!file) return;
-
+importBtn.onclick = () => importFile.click();
+importFile.onchange = (e) => {
   const reader = new FileReader();
-  reader.onload = function(e) {
+  reader.onload = () => {
     try {
-      const data = JSON.parse(e.target.result);
-      if (!Array.isArray(data)) throw new Error("Invalid JSON format");
-      localStorage.setItem("customers", JSON.stringify(data));
-      loadCustomers();
-      alert("Customer data imported successfully!");
+      const data = JSON.parse(reader.result);
+      if (Array.isArray(data)) {
+        customers = data;
+        saveCustomerList();
+      }
     } catch (err) {
-      alert("Failed to import customers: " + err.message);
+      alert("Invalid JSON file");
     }
   };
-  reader.readAsText(file);
-}
+  reader.readAsText(e.target.files[0]);
+};
 
-
-document.addEventListener("DOMContentLoaded", () => {
-  const importInput = document.createElement("input");
-  importInput.type = "file";
-  importInput.accept = ".json";
-  importInput.style.marginTop = "10px";
-  importInput.addEventListener("change", importCustomers);
-  document.querySelector(".main").appendChild(importInput);
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-  loadCustomers();
-
-  const exportBtn = document.querySelector("button[onclick='exportCustomers()']");
-
-  const importLabel = document.createElement("label");
-  importLabel.textContent = "Import Customers";
-  importLabel.className = "import-label";
-  importLabel.setAttribute("for", "importInput");
-
-  const importInput = document.createElement("input");
-  importInput.type = "file";
-  importInput.id = "importInput";
-  importInput.accept = ".json";
-  importInput.addEventListener("change", importCustomers);
-
-  exportBtn.insertAdjacentElement("afterend", importLabel);
-  importLabel.insertAdjacentElement("afterend", importInput);
-});
+renderTable();
