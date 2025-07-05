@@ -38,23 +38,23 @@ function loadCustomers() {
   const customers = JSON.parse(localStorage.getItem("customers") || "[]");
   tableBody.innerHTML = "";
   customers.forEach(customer => {
-    const mapLink = \`https://www.google.com/maps/search/\${encodeURIComponent(customer.address)}\`;
+    const mapLink = `https://www.google.com/maps/search/${encodeURIComponent(customer.address || "")}`;
     const row = document.createElement("tr");
     row.innerHTML = `
-      <td>\${customer.firstName || ""}</td>
-      <td>\${customer.lastName || ""}</td>
-      <td>\${customer.company || ""}</td>
-      <td><a href="\${mapLink}" target="_blank">\${customer.address || ""}</a></td>
-      <td>\${customer.mobile || ""}</td>
-      <td>\${customer.home || ""}</td>
-      <td>\${customer.work || ""}</td>
-      <td>\${customer.email || ""}</td>
-      <td>\${customer.type || ""}</td>
-      <td>\${customer.source || ""}</td>
-      <td>\${customer.notes || ""}</td>
+      <td>${customer.firstName || ""}</td>
+      <td>${customer.lastName || ""}</td>
+      <td>${customer.company || ""}</td>
+      <td><a href="${mapLink}" target="_blank">${customer.address || ""}</a></td>
+      <td>${customer.mobile || ""}</td>
+      <td>${customer.home || ""}</td>
+      <td>${customer.work || ""}</td>
+      <td>${customer.email || ""}</td>
+      <td>${customer.type || ""}</td>
+      <td>${customer.source || ""}</td>
+      <td>${customer.notes || ""}</td>
       <td>
-        <button class="edit" onclick="editCustomer(\${customer.id})">Edit</button>
-        <button class="delete" onclick="deleteCustomer(\${customer.id})">Delete</button>
+        <button class="edit" onclick="editCustomer(${customer.id})">Edit</button>
+        <button class="delete" onclick="deleteCustomer(${customer.id})">Delete</button>
       </td>
     `;
     tableBody.appendChild(row);
@@ -66,17 +66,17 @@ function editCustomer(id) {
   const customer = customers.find(c => c.id === id);
   if (!customer) return;
 
-  form.firstName.value = customer.firstName || "";
-  form.lastName.value = customer.lastName || "";
-  form.company.value = customer.company || "";
-  form.address.value = customer.address || "";
-  form.mobile.value = customer.mobile || "";
-  form.home.value = customer.home || "";
-  form.work.value = customer.work || "";
-  form.email.value = customer.email || "";
-  form.type.value = customer.type || "";
-  form.source.value = customer.source || "";
-  form.notes.value = customer.notes || "";
+  form.firstName.value = customer.firstName;
+  form.lastName.value = customer.lastName;
+  form.company.value = customer.company;
+  form.address.value = customer.address;
+  form.mobile.value = customer.mobile;
+  form.home.value = customer.home;
+  form.work.value = customer.work;
+  form.email.value = customer.email;
+  form.type.value = customer.type;
+  form.source.value = customer.source;
+  form.notes.value = customer.notes;
   form.id.value = customer.id;
 }
 

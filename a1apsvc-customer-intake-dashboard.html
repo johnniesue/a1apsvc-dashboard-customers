@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Customer Intake - A-1 Plumbing</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="sidebar">
+    <h2>A-1 Plumbing</h2>
+    <ul>
+      <li class="active"><a href="#">Customer Intake</a></li>
+      <li><a href="#">Service Requests</a></li>
+      <li><a href="#">Invoices</a></li>
+      <li><a href="#">Schedule</a></li>
+      <li><a href="#">Inventory</a></li>
+    </ul>
+  </div>
+  <div class="main">
+    <h1>Customer Intake Dashboard</h1>
+    <form id="customerForm">
+      <input type="hidden" name="id" />
+      <input type="text" name="firstName" placeholder="First Name" required />
+      <input type="text" name="lastName" placeholder="Last Name" />
+      <input type="text" name="company" placeholder="Company (Optional)" />
+      <input type="text" name="address" placeholder="Address" required />
+      <input type="text" name="mobile" placeholder="Mobile Phone" required />
+      <input type="text" name="home" placeholder="Home Phone" />
+      <input type="text" name="work" placeholder="Work Phone" />
+      <input type="email" name="email" placeholder="Email" />
+      <input type="text" name="type" placeholder="Customer Type" />
+      <input type="text" name="source" placeholder="Lead Source" />
+      <input type="text" name="notes" placeholder="Notes" />
+      <button type="submit">Save Customer</button>
+    </form>
+    <table id="customerTable">
+      <thead>
+        <tr>
+          <th>First</th><th>Last</th><th>Company</th><th>Address</th>
+          <th>Mobile</th><th>Home</th><th>Work</th><th>Email</th>
+          <th>Type</th><th>Source</th><th>Notes</th><th>Actions</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <button onclick="exportCustomers()">Export All Customers</button>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
