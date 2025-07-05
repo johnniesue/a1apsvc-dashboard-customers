@@ -10,17 +10,17 @@ form.addEventListener("submit", function(e) {
 
   const customer = {
     id: id ? parseInt(id) : Date.now(),
-    firstName: formData.get("firstName"),
-    lastName: formData.get("lastName"),
-    company: formData.get("company"),
-    address: formData.get("address"),
-    mobile: formData.get("mobile"),
-    home: formData.get("home"),
-    work: formData.get("work"),
-    email: formData.get("email"),
-    type: formData.get("type"),
-    source: formData.get("source"),
-    notes: formData.get("notes")
+    firstName: formData.get("firstName") || "",
+    lastName: formData.get("lastName") || "",
+    company: formData.get("company") || "",
+    address: formData.get("address") || "",
+    mobile: formData.get("mobile") || "",
+    home: formData.get("home") || "",
+    work: formData.get("work") || "",
+    email: formData.get("email") || "",
+    type: formData.get("type") || "",
+    source: formData.get("source") || "",
+    notes: formData.get("notes") || ""
   };
 
   if (id) {
@@ -38,23 +38,24 @@ function loadCustomers() {
   const customers = JSON.parse(localStorage.getItem("customers") || "[]");
   tableBody.innerHTML = "";
   customers.forEach(customer => {
-    const mapLink = `https://www.google.com/maps/search/${encodeURIComponent(customer.address || "")}`;
+    const safeAddress = customer.address ? customer.address.replace(/"/g, '&quot;') : "";
+    const mapLink = \`https://www.google.com/maps/search/\${encodeURIComponent(safeAddress)}\`;
     const row = document.createElement("tr");
     row.innerHTML = `
-      <td>${customer.firstName || ""}</td>
-      <td>${customer.lastName || ""}</td>
-      <td>${customer.company || ""}</td>
-      <td><a href="${mapLink}" target="_blank">${customer.address || ""}</a></td>
-      <td>${customer.mobile || ""}</td>
-      <td>${customer.home || ""}</td>
-      <td>${customer.work || ""}</td>
-      <td>${customer.email || ""}</td>
-      <td>${customer.type || ""}</td>
-      <td>${customer.source || ""}</td>
-      <td>${customer.notes || ""}</td>
+      <td>\${customer.firstName}</td>
+      <td>\${customer.lastName}</td>
+      <td>\${customer.company}</td>
+      <td><a href="\${mapLink}" target="_blank" rel="noopener noreferrer">\${customer.address}</a></td>
+      <td>\${customer.mobile}</td>
+      <td>\${customer.home}</td>
+      <td>\${customer.work}</td>
+      <td>\${customer.email}</td>
+      <td>\${customer.type}</td>
+      <td>\${customer.source}</td>
+      <td>\${customer.notes}</td>
       <td>
-        <button class="edit" onclick="editCustomer(${customer.id})">Edit</button>
-        <button class="delete" onclick="deleteCustomer(${customer.id})">Delete</button>
+        <button class="edit" onclick="editCustomer(\${customer.id})">Edit</button>
+        <button class="delete" onclick="deleteCustomer(\${customer.id})">Delete</button>
       </td>
     `;
     tableBody.appendChild(row);
