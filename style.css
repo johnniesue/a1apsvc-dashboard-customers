@@ -68,3 +68,32 @@ button.delete {
   border: none;
   padding: 4px 8px;
 }
+
+
+/* Improve visibility of address links */
+td a {
+  color: #66d9ef;
+  text-decoration: none;
+}
+td a:hover {
+  text-decoration: underline;
+}
+
+/* Style import label button */
+label.import-label {
+  display: inline-block;
+  margin-top: 10px;
+  background-color: #4caf50;
+  color: white;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+label.import-label:hover {
+  background-color: #45a049;
+}
+
+input[type="file"]#importInput {
+  display: none;
+}

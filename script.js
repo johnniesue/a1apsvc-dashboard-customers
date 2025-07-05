@@ -127,3 +127,23 @@ document.addEventListener("DOMContentLoaded", () => {
   importInput.addEventListener("change", importCustomers);
   document.querySelector(".main").appendChild(importInput);
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+  loadCustomers();
+
+  const exportBtn = document.querySelector("button[onclick='exportCustomers()']");
+
+  const importLabel = document.createElement("label");
+  importLabel.textContent = "Import Customers";
+  importLabel.className = "import-label";
+  importLabel.setAttribute("for", "importInput");
+
+  const importInput = document.createElement("input");
+  importInput.type = "file";
+  importInput.id = "importInput";
+  importInput.accept = ".json";
+  importInput.addEventListener("change", importCustomers);
+
+  exportBtn.insertAdjacentElement("afterend", importLabel);
+  importLabel.insertAdjacentElement("afterend", importInput);
+});
