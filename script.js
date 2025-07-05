@@ -74,6 +74,27 @@ function exportCustomers() {
   link.click();
 }
 
+function importCustomers(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (Array.isArray(data)) {
+        localStorage.setItem("customers", JSON.stringify(data));
+        loadCustomers();
+        alert("Customers imported successfully.");
+      } else {
+        alert("Invalid format: expected an array.");
+      }
+    } catch (err) {
+      alert("Failed to import: " + err.message);
+    }
+  };
+  reader.readAsText(file);
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   loadCustomers();
 
@@ -81,5 +102,17 @@ document.addEventListener("DOMContentLoaded", () => {
   exportBtn.textContent = "Export All Customers";
   exportBtn.style.marginTop = "10px";
   exportBtn.onclick = exportCustomers;
-  document.querySelector(".main").appendChild(exportBtn);
+
+  const importInput = document.createElement("input");
+  importInput.type = "file";
+  importInput.accept = "application/json";
+  importInput.style.marginLeft = "10px";
+  importInput.onchange = importCustomers;
+
+  const container = document.createElement("div");
+  container.style.marginTop = "20px";
+  container.appendChild(exportBtn);
+  container.appendChild(importInput);
+
+  document.querySelector(".main").appendChild(container);
 });
