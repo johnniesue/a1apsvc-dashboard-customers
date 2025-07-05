@@ -98,3 +98,32 @@ function exportCustomers() {
 }
 
 document.addEventListener("DOMContentLoaded", loadCustomers);
+
+function importCustomers(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (!Array.isArray(data)) throw new Error("Invalid JSON format");
+      localStorage.setItem("customers", JSON.stringify(data));
+      loadCustomers();
+      alert("Customer data imported successfully!");
+    } catch (err) {
+      alert("Failed to import customers: " + err.message);
+    }
+  };
+  reader.readAsText(file);
+}
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  const importInput = document.createElement("input");
+  importInput.type = "file";
+  importInput.accept = ".json";
+  importInput.style.marginTop = "10px";
+  importInput.addEventListener("change", importCustomers);
+  document.querySelector(".main").appendChild(importInput);
+});
