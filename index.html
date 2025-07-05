@@ -21,11 +21,12 @@
   <div class="main">
     <h1>Customer Directory</h1>
     <form id="customerForm">
+      <input type="hidden" name="id" />
       <input type="text" placeholder="Full Name" name="name" required />
       <input type="text" placeholder="Phone" name="phone" required />
       <input type="email" placeholder="Email" name="email" />
       <input type="text" placeholder="Address" name="address" required />
-      <button type="submit">Add Customer</button>
+      <button type="submit">Save Customer</button>
     </form>
     <table id="customerTable">
       <thead>

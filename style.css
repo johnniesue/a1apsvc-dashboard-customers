@@ -60,6 +60,13 @@ th, td {
   padding: 10px;
   text-align: left;
 }
+button.edit {
+  background: #ffaa00;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  cursor: pointer;
+}
 button.delete {
   background: #ff4c4c;
   border: none;

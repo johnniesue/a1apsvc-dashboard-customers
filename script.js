@@ -5,15 +5,23 @@ const tableBody = document.querySelector("#customerTable tbody");
 form.addEventListener("submit", function(e) {
   e.preventDefault();
   const formData = new FormData(form);
+  const id = formData.get("id");
+  let customers = JSON.parse(localStorage.getItem("customers") || "[]");
+
   const customer = {
+    id: id ? parseInt(id) : Date.now(),
     name: formData.get("name"),
     phone: formData.get("phone"),
     email: formData.get("email"),
-    address: formData.get("address"),
-    id: Date.now()
+    address: formData.get("address")
   };
-  let customers = JSON.parse(localStorage.getItem("customers") || "[]");
-  customers.push(customer);
+
+  if (id) {
+    customers = customers.map(c => c.id === customer.id ? customer : c);
+  } else {
+    customers.push(customer);
+  }
+
   localStorage.setItem("customers", JSON.stringify(customers));
   form.reset();
   loadCustomers();
@@ -29,10 +37,25 @@ function loadCustomers() {
       <td>${customer.phone}</td>
       <td>${customer.email}</td>
       <td>${customer.address}</td>
-      <td><button class="delete" onclick="deleteCustomer(${customer.id})">Delete</button></td>
+      <td>
+        <button class="edit" onclick="editCustomer(${customer.id})">Edit</button>
+        <button class="delete" onclick="deleteCustomer(${customer.id})">Delete</button>
+      </td>
     `;
     tableBody.appendChild(row);
   });
+}
+
+function editCustomer(id) {
+  const customers = JSON.parse(localStorage.getItem("customers") || "[]");
+  const customer = customers.find(c => c.id === id);
+  if (!customer) return;
+
+  form.name.value = customer.name;
+  form.phone.value = customer.phone;
+  form.email.value = customer.email;
+  form.address.value = customer.address;
+  form.id.value = customer.id;
 }
 
 function deleteCustomer(id) {
@@ -42,4 +65,21 @@ function deleteCustomer(id) {
   loadCustomers();
 }
 
-document.addEventListener("DOMContentLoaded", loadCustomers);
+function exportCustomers() {
+  const customers = JSON.parse(localStorage.getItem("customers") || "[]");
+  const blob = new Blob([JSON.stringify(customers, null, 2)], { type: "application/json" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "customers.json";
+  link.click();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  loadCustomers();
+
+  const exportBtn = document.createElement("button");
+  exportBtn.textContent = "Export All Customers";
+  exportBtn.style.marginTop = "10px";
+  exportBtn.onclick = exportCustomers;
+  document.querySelector(".main").appendChild(exportBtn);
+});
