@@ -35,10 +35,8 @@ body {
   padding: 20px;
 }
 form input, form button {
-  display: inline-block;
   margin: 5px;
   padding: 8px;
-  font-size: 14px;
 }
 form button {
   background-color: #5566ff;
