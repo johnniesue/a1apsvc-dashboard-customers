@@ -1,70 +1,66 @@
 
 body {
-  display: flex;
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #111;
-  color: #fff;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #1e1e2f;
+    color: #fff;
 }
 
 .sidebar {
-  width: 200px;
-  background: #000;
-  padding: 20px;
-  height: 100vh;
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    width: 200px;
+    background: #111;
+    padding: 20px;
 }
 
 .sidebar h2 {
-  color: #fff;
-  font-size: 20px;
-  margin-bottom: 20px;
+    color: #fff;
+    margin-bottom: 20px;
 }
 
-.sidebar ul {
-  list-style: none;
-  padding: 0;
+.sidebar a {
+    color: #ccc;
+    display: block;
+    margin: 10px 0;
+    text-decoration: none;
 }
 
-.sidebar ul li {
-  margin-bottom: 10px;
-}
-
-.sidebar ul li a {
-  color: #87CEEB;
-  text-decoration: none;
+.sidebar a.active {
+    color: #fff;
+    font-weight: bold;
 }
 
 .main {
-  flex-grow: 1;
-  padding: 20px;
+    margin-left: 220px;
+    padding: 20px;
 }
 
-.form-row input {
-  margin: 2px;
-  padding: 4px;
+.form input {
+    margin: 5px;
+    padding: 5px;
 }
 
-button {
-  padding: 5px 10px;
-  margin: 2px;
-  cursor: pointer;
+.form button {
+    margin: 5px;
+    padding: 5px 10px;
 }
 
 table {
-  width: 100%;
-  margin-top: 10px;
-  border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
 }
 
 table, th, td {
-  border: 1px solid #444;
+    border: 1px solid #333;
 }
 
 th, td {
-  padding: 5px;
-  text-align: left;
+    padding: 8px;
+    text-align: left;
 }
 
-a {
-  color: #6495ED;
+button {
+    padding: 5px 10px;
 }
