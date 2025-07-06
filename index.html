@@ -1,41 +1,36 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Customer Intake Dashboard</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="sidebar">
     <h2>A-1 Plumbing</h2>
-    <ul>
-      <li><strong>Customer Intake</strong></li>
-      <li>Service Requests</li>
-      <li>Invoices</li>
-      <li>Schedule</li>
-      <li>Inventory</li>
-    </ul>
+    <a href="#">Customer Intake</a>
+    <a href="#">Service Requests</a>
+    <a href="#">Invoices</a>
+    <a href="#">Schedule</a>
+    <a href="#">Inventory</a>
   </div>
-
   <div class="main">
     <h1>Customer Intake Dashboard</h1>
-    <div class="form">
-      <input type="text" placeholder="First Name" id="firstName">
-      <input type="text" placeholder="Last Name" id="lastName">
-      <input type="text" placeholder="Company (Optional)" id="company">
-      <input type="text" placeholder="Address" id="address">
-      <input type="text" placeholder="Mobile Phone" id="mobile">
-      <input type="text" placeholder="Home Phone" id="home">
-      <input type="text" placeholder="Work Phone" id="work">
-      <input type="email" placeholder="Email" id="email">
-      <input type="text" placeholder="Customer Type" id="type">
-      <input type="text" placeholder="Lead Source" id="source">
-      <input type="text" placeholder="Notes" id="notes">
+    <div class="form-row">
+      <input id="firstName" placeholder="First Name" />
+      <input id="lastName" placeholder="Last Name" />
+      <input id="company" placeholder="Company (Optional)" />
+      <input id="address" placeholder="Address" />
+      <input id="mobilePhone" placeholder="Mobile Phone" />
+      <input id="homePhone" placeholder="Home Phone" />
+      <input id="workPhone" placeholder="Work Phone" />
+      <input id="email" placeholder="Email" />
+      <input id="type" placeholder="Customer Type" />
+      <input id="source" placeholder="Lead Source" />
+      <input id="notes" placeholder="Notes" />
       <button onclick="saveCustomer()">Save Customer</button>
     </div>
-
     <table id="customerTable">
       <thead>
         <tr>
@@ -46,12 +41,10 @@
       </thead>
       <tbody></tbody>
     </table>
-
     <button onclick="exportCustomers()">Export All Customers</button>
-    <input type="file" id="importFile" onchange="importCustomers()">
-    <button onclick="document.getElementById('importFile').click()">Import Customers</button>
+    <input type="file" id="importFile" />
+    <button onclick="importCustomers()">Import Customers</button>
   </div>
-
   <script src="script.js"></script>
 </body>
 </html>

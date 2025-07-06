@@ -1,57 +1,46 @@
-
 body {
   margin: 0;
-  font-family: sans-serif;
-  background: #1a1a2e;
-  color: white;
-}
-
-.sidebar {
-  background: #111;
-  width: 200px;
-  height: 100vh;
-  float: left;
-  padding: 20px;
-  box-sizing: border-box;
-}
-
-.sidebar h2 {
-  font-size: 18px;
-  margin-bottom: 10px;
-}
-
-.sidebar ul {
-  list-style: none;
-  padding: 0;
-}
-
-.sidebar li {
-  margin: 10px 0;
-}
-
-.main {
-  margin-left: 220px;
-  padding: 20px;
-}
-
-input, button {
-  margin: 5px;
-  padding: 8px;
-}
-
-table {
-  width: 100%;
-  margin-top: 20px;
-  background: #222;
-  border-collapse: collapse;
-}
-
-th, td {
-  padding: 10px;
-  border: 1px solid #444;
+  font-family: Arial;
+  background-color: #121222;
   color: #fff;
 }
-
-a {
-  color: #82caff;
+.sidebar {
+  width: 180px;
+  height: 100vh;
+  background: #000;
+  color: #fff;
+  float: left;
+  padding: 10px;
+}
+.sidebar h2 {
+  font-size: 1.2rem;
+}
+.sidebar a {
+  display: block;
+  padding: 6px 0;
+  color: #ccc;
+  text-decoration: none;
+}
+.main {
+  margin-left: 190px;
+  padding: 20px;
+}
+input, button {
+  margin: 4px;
+  padding: 6px;
+}
+table {
+  width: 100%;
+  margin-top: 12px;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 6px;
+  border: 1px solid #444;
+}
+a.address-link {
+  color: #88f;
+}
+button {
+  cursor: pointer;
 }
