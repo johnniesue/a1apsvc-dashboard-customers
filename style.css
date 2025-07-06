@@ -1,18 +1,23 @@
 
 body {
-  margin: 0;
-  font-family: sans-serif;
-  background-color: #111;
-  color: #fff;
   display: flex;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #111;
+  color: #fff;
 }
 
 .sidebar {
-  background: #000;
-  color: white;
   width: 200px;
+  background: #000;
   padding: 20px;
   height: 100vh;
+}
+
+.sidebar h2 {
+  color: #fff;
+  font-size: 20px;
+  margin-bottom: 20px;
 }
 
 .sidebar ul {
@@ -21,39 +26,45 @@ body {
 }
 
 .sidebar ul li {
-  margin: 10px 0;
-  cursor: pointer;
+  margin-bottom: 10px;
 }
 
-.main-content {
-  flex: 1;
+.sidebar ul li a {
+  color: #87CEEB;
+  text-decoration: none;
+}
+
+.main {
+  flex-grow: 1;
   padding: 20px;
 }
 
-.view {
-  display: none;
+.form-row input {
+  margin: 2px;
+  padding: 4px;
 }
 
-.view.active {
-  display: block;
-}
-
-input, button {
-  margin: 5px;
+button {
+  padding: 5px 10px;
+  margin: 2px;
+  cursor: pointer;
 }
 
 table {
   width: 100%;
-  border-collapse: collapse;
   margin-top: 10px;
+  border-collapse: collapse;
+}
+
+table, th, td {
+  border: 1px solid #444;
 }
 
 th, td {
-  border: 1px solid #555;
   padding: 5px;
   text-align: left;
 }
 
 a {
-  color: #44c4ff;
+  color: #6495ED;
 }

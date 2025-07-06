@@ -1,91 +1,117 @@
 
-function showView(id) {
-  document.querySelectorAll('.view').forEach(view => {
-    view.classList.remove('active');
-  });
-  document.getElementById(id).classList.add('active');
-}
-
-let customers = JSON.parse(localStorage.getItem('customers')) || [];
+let editIndex = null;
 
 function saveCustomer() {
   const customer = {
-    first: document.getElementById('firstName').value,
-    last: document.getElementById('lastName').value,
-    company: document.getElementById('company').value,
-    address: document.getElementById('address').value,
-    mobile: document.getElementById('mobile').value,
-    home: document.getElementById('home').value,
-    work: document.getElementById('work').value,
-    email: document.getElementById('email').value,
-    type: document.getElementById('type').value,
-    source: document.getElementById('source').value,
-    notes: document.getElementById('notes').value
+    first: document.getElementById("firstName").value,
+    last: document.getElementById("lastName").value,
+    company: document.getElementById("company").value,
+    address: document.getElementById("address").value,
+    mobile: document.getElementById("mobile").value,
+    home: document.getElementById("home").value,
+    work: document.getElementById("work").value,
+    email: document.getElementById("email").value,
+    type: document.getElementById("type").value,
+    source: document.getElementById("source").value,
+    notes: document.getElementById("notes").value,
   };
-  customers.push(customer);
-  localStorage.setItem('customers', JSON.stringify(customers));
+
+  const customers = JSON.parse(localStorage.getItem("customers") || "[]");
+
+  if (editIndex !== null) {
+    customers[editIndex] = customer;
+    editIndex = null;
+  } else {
+    customers.push(customer);
+  }
+
+  localStorage.setItem("customers", JSON.stringify(customers));
   renderCustomers();
+  clearForm();
 }
 
 function renderCustomers() {
-  const tbody = document.getElementById('customerTableBody');
-  tbody.innerHTML = '';
+  const customers = JSON.parse(localStorage.getItem("customers") || "[]");
+  const table = document.getElementById("customerList");
+  table.innerHTML = "";
   customers.forEach((c, index) => {
-    const row = document.createElement('tr');
-    row.innerHTML = `
-      <td>${c.first}</td><td>${c.last}</td><td>${c.company}</td>
-      <td><a href="https://www.google.com/maps/search/${encodeURIComponent(c.address)}" target="_blank">${c.address}</a></td>
-      <td>${c.mobile}</td><td>${c.home}</td><td>${c.work}</td>
-      <td>${c.email}</td><td>${c.type}</td><td>${c.source}</td><td>${c.notes}</td>
+    const row = document.createElement("tr");
+    row.innerHTML = \`
+      <td>\${c.first}</td>
+      <td>\${c.last}</td>
+      <td>\${c.company}</td>
+      <td><a href="https://www.google.com/maps/search/\${encodeURIComponent(c.address)}" target="_blank">\${c.address}</a></td>
+      <td>\${c.mobile}</td>
+      <td>\${c.home}</td>
+      <td>\${c.work}</td>
+      <td>\${c.email}</td>
+      <td>\${c.type}</td>
+      <td>\${c.source}</td>
+      <td>\${c.notes}</td>
       <td>
-        <button onclick="editCustomer(${index})">Edit</button>
-        <button onclick="deleteCustomer(${index})">Delete</button>
+        <button onclick="editCustomer(\${index})">Edit</button>
+        <button onclick="deleteCustomer(\${index})">Delete</button>
       </td>
-    `;
-    tbody.appendChild(row);
+    \`;
+    table.appendChild(row);
   });
 }
 
-function editCustomer(index) {
-  const c = customers[index];
-  document.getElementById('firstName').value = c.first;
-  document.getElementById('lastName').value = c.last;
-  document.getElementById('company').value = c.company;
-  document.getElementById('address').value = c.address;
-  document.getElementById('mobile').value = c.mobile;
-  document.getElementById('home').value = c.home;
-  document.getElementById('work').value = c.work;
-  document.getElementById('email').value = c.email;
-  document.getElementById('type').value = c.type;
-  document.getElementById('source').value = c.source;
-  document.getElementById('notes').value = c.notes;
-  customers.splice(index, 1);
-}
-
 function deleteCustomer(index) {
+  const customers = JSON.parse(localStorage.getItem("customers") || "[]");
   customers.splice(index, 1);
-  localStorage.setItem('customers', JSON.stringify(customers));
+  localStorage.setItem("customers", JSON.stringify(customers));
   renderCustomers();
 }
 
+function editCustomer(index) {
+  const customers = JSON.parse(localStorage.getItem("customers") || "[]");
+  const c = customers[index];
+  document.getElementById("firstName").value = c.first;
+  document.getElementById("lastName").value = c.last;
+  document.getElementById("company").value = c.company;
+  document.getElementById("address").value = c.address;
+  document.getElementById("mobile").value = c.mobile;
+  document.getElementById("home").value = c.home;
+  document.getElementById("work").value = c.work;
+  document.getElementById("email").value = c.email;
+  document.getElementById("type").value = c.type;
+  document.getElementById("source").value = c.source;
+  document.getElementById("notes").value = c.notes;
+  editIndex = index;
+}
+
+function clearForm() {
+  document.querySelectorAll(".form-row input").forEach(input => input.value = "");
+}
+
+function exportCustomers() {
+  const data = localStorage.getItem("customers");
+  const blob = new Blob([data], {type: "application/json"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "customers.json";
+  a.click();
+}
+
 function importCustomers() {
-  const file = document.getElementById('importFile').files[0];
+  const file = document.getElementById("importFile").files[0];
+  if (!file) return;
   const reader = new FileReader();
-  reader.onload = function(e) {
-    const imported = JSON.parse(e.target.result);
-    customers = imported;
-    localStorage.setItem('customers', JSON.stringify(customers));
+  reader.onload = () => {
+    const customers = JSON.parse(reader.result);
+    localStorage.setItem("customers", JSON.stringify(customers));
     renderCustomers();
   };
   reader.readAsText(file);
 }
 
-function exportCustomers() {
-  const blob = new Blob([JSON.stringify(customers, null, 2)], { type: 'application/json' });
-  const link = document.createElement('a');
-  link.href = URL.createObjectURL(blob);
-  link.download = 'customers.json';
-  link.click();
+function showView(view) {
+  document.querySelectorAll(".view").forEach(v => v.style.display = "none");
+  document.getElementById(view).style.display = "block";
+  document.getElementById("viewTitle").innerText =
+    view.charAt(0).toUpperCase() + view.slice(1) + " Dashboard";
 }
 
-window.onload = renderCustomers;
+renderCustomers();
