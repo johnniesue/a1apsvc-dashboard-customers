@@ -1,0 +1,54 @@
+const scriptURL = "https://script.google.com/macros/s/AKfycbwfUR-Kvxx-nV-q0tko55k33UGmyef0cjtpONDa5AC6CIraHDDr6s21B-1pcB1bLhQw/exec"; // Live Web App URL
+
+function saveCustomer() {
+  const customerData = {
+    firstName: document.getElementById("firstName").value,
+    lastName: document.getElementById("lastName").value,
+    company: document.getElementById("company").value,
+    address: document.getElementById("address").value,
+    mobile: document.getElementById("mobilePhone").value,
+    home: document.getElementById("homePhone").value,
+    work: document.getElementById("workPhone").value,
+    email: document.getElementById("email").value,
+    type: document.getElementById("customerType").value,
+    source: document.getElementById("leadSource").value,
+    notes: document.getElementById("notes").value,
+    timestamp: new Date().toLocaleString()
+  };
+
+  fetch(scriptURL, {
+    method: "POST",
+    body: JSON.stringify(customerData),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.status === "success") {
+        alert("Customer saved!");
+        loadCustomers(); // Optionally reload the customer list
+        clearForm();     // Optionally clear form after saving
+      } else {
+        alert("Failed to save customer: " + data.message);
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      alert("Network error: " + error.message);
+    });
+}
+
+function clearForm() {
+  document.getElementById("firstName").value = "";
+  document.getElementById("lastName").value = "";
+  document.getElementById("company").value = "";
+  document.getElementById("address").value = "";
+  document.getElementById("mobilePhone").value = "";
+  document.getElementById("homePhone").value = "";
+  document.getElementById("workPhone").value = "";
+  document.getElementById("email").value = "";
+  document.getElementById("customerType").value = "";
+  document.getElementById("leadSource").value = "";
+  document.getElementById("notes").value = "";
+}
