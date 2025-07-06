@@ -2,52 +2,51 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Customer Intake Dashboard</title>
-  <link rel="stylesheet" href="style.css"/>
+  <title>Customer Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <aside>
-    <h1>A-1 Plumbing</h1>
-    <nav>
-      <a href="#">Customers</a>
-      <a href="#">Jobs</a>
-      <a href="#">Estimates</a>
-      <a href="#">Invoices</a>
-    </nav>
-  </aside>
   <main>
-    <h2>Customer Intake Dashboard</h2>
-    <div class="form-row">
-      <input id="firstName" placeholder="First Name">
-      <input id="lastName" placeholder="Last Name">
-      <input id="company" placeholder="Company (Optional)">
-      <input id="address" placeholder="Address">
-      <input id="mobile" placeholder="Mobile Phone">
-      <input id="home" placeholder="Home Phone">
-      <input id="work" placeholder="Work Phone">
-      <input id="email" placeholder="Email">
-      <input id="type" placeholder="Customer Type">
-      <input id="source" placeholder="Lead Source">
-      <input id="notes" placeholder="Notes">
+    <h1>A-1 Customer Intake Dashboard</h1>
+    <div class="form">
+      <input id="first" placeholder="First Name" />
+      <input id="last" placeholder="Last Name" />
+      <input id="company" placeholder="Company" />
+      <input id="address" placeholder="Address" />
+      <input id="mobile" placeholder="Mobile Phone" />
+      <input id="home" placeholder="Home Phone" />
+      <input id="work" placeholder="Work Phone" />
+      <input id="email" placeholder="Email" />
+      <input id="type" placeholder="Customer Type" />
+      <input id="source" placeholder="Lead Source" />
+      <input id="notes" placeholder="Notes" />
       <button onclick="saveCustomer()">Save Customer</button>
     </div>
     <div class="import-export">
-      <input type="text" id="search" oninput="searchCustomers()" placeholder="Search customers...">
-      <button onclick="exportCustomers()">Export All Customers</button>
       <input type="file" id="importFile" />
-      <button onclick="importCustomers()">Import Customers</button>
+      <button onclick="importCustomers()">Import</button>
+      <button onclick="exportCustomers()">Export</button>
     </div>
+    <input id="search" oninput="searchCustomers()" placeholder="Search..." />
     <table>
       <thead>
-        <tr>
-          <th>First</th><th>Last</th><th>Company</th><th>Address</th><th>Mobile</th>
-          <th>Home</th><th>Work</th><th>Email</th><th>Type</th><th>Source</th><th>Notes</th><th>Actions</th>
-        </tr>
+        <tr><th>First</th><th>Last</th><th>Address</th><th>Email</th><th>Actions</th></tr>
       </thead>
       <tbody id="customerTableBody"></tbody>
     </table>
   </main>
+
+  <!-- History Modal -->
+  <div id="historyModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeHistory()">&times;</span>
+      <h2>Service History</h2>
+      <ul id="historyList"></ul>
+      <textarea id="historyNote" placeholder="Add note..."></textarea>
+      <button onclick="addHistoryNote()">Add Note</button>
+    </div>
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>

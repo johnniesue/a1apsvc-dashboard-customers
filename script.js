@@ -1,41 +1,55 @@
-let customers = JSON.parse(localStorage.getItem("customers")) || [];
+const webhookURL = "https://script.google.com/macros/s/AKfycbzFjcnYB9pnJ-PtZtkGuk2NKzNGzhqbMDES-IDzL1dkgCcyF1Z2HfxwHF58R3wOerdR/exec";
+let customers = JSON.parse(localStorage.getItem("customers") || "[]");
+let history = JSON.parse(localStorage.getItem("history") || "{}");
+let editIndex = -1;
+let currentKey = "";
+
+function val(id) { return document.getElementById(id).value.trim(); }
+
+function saveCustomer() {
+  const c = {
+    first: val("first"), last: val("last"), company: val("company"),
+    address: val("address"), mobile: val("mobile"), home: val("home"),
+    work: val("work"), email: val("email"), type: val("type"),
+    source: val("source"), notes: val("notes")
+  };
+
+  if (editIndex >= 0) {
+    customers[editIndex] = c;
+    editIndex = -1;
+  } else {
+    customers.push(c);
+  }
+
+  localStorage.setItem("customers", JSON.stringify(customers));
+  sendToSheets(c);
+  renderCustomers();
+  document.querySelectorAll("input, textarea").forEach(el => el.value = "");
+}
 
 function renderCustomers() {
   const tbody = document.getElementById("customerTableBody");
   tbody.innerHTML = "";
   customers.forEach((c, i) => {
-    const row = document.createElement("tr");
+    const row = tbody.insertRow();
     row.innerHTML = \`
-      <td>\${c.firstName}</td><td>\${c.lastName}</td><td>\${c.company}</td>
-      <td><a href="https://www.google.com/maps/search/\${encodeURIComponent(c.address)}" target="_blank">\${c.address}</a></td>
-      <td>\${c.mobile}</td><td>\${c.home}</td><td>\${c.work}</td><td>\${c.email}</td>
-      <td>\${c.type}</td><td>\${c.source}</td><td>\${c.notes}</td>
+      <td>\${c.first}</td><td>\${c.last}</td><td>\${c.address}</td><td>\${c.email}</td>
       <td>
         <button onclick="editCustomer(\${i})">Edit</button>
         <button onclick="deleteCustomer(\${i})">Delete</button>
+        <button onclick="openHistory('\${c.address}')">History</button>
       </td>
     \`;
-    tbody.appendChild(row);
   });
 }
 
-function saveCustomer() {
-  const c = {
-    firstName: document.getElementById("firstName").value,
-    lastName: document.getElementById("lastName").value,
-    company: document.getElementById("company").value,
-    address: document.getElementById("address").value,
-    mobile: document.getElementById("mobile").value,
-    home: document.getElementById("home").value,
-    work: document.getElementById("work").value,
-    email: document.getElementById("email").value,
-    type: document.getElementById("type").value,
-    source: document.getElementById("source").value,
-    notes: document.getElementById("notes").value
-  };
-  customers.push(c);
-  localStorage.setItem("customers", JSON.stringify(customers));
-  renderCustomers();
+function editCustomer(index) {
+  const c = customers[index];
+  Object.entries(c).forEach(([k, v]) => {
+    const el = document.getElementById(k);
+    if (el) el.value = v;
+  });
+  editIndex = index;
 }
 
 function deleteCustomer(index) {
@@ -44,54 +58,66 @@ function deleteCustomer(index) {
   renderCustomers();
 }
 
-function editCustomer(index) {
-  const c = customers[index];
-  document.getElementById("firstName").value = c.firstName;
-  document.getElementById("lastName").value = c.lastName;
-  document.getElementById("company").value = c.company;
-  document.getElementById("address").value = c.address;
-  document.getElementById("mobile").value = c.mobile;
-  document.getElementById("home").value = c.home;
-  document.getElementById("work").value = c.work;
-  document.getElementById("email").value = c.email;
-  document.getElementById("type").value = c.type;
-  document.getElementById("source").value = c.source;
-  document.getElementById("notes").value = c.notes;
-  customers.splice(index, 1);
-  localStorage.setItem("customers", JSON.stringify(customers));
-  renderCustomers();
-}
-
-function exportCustomers() {
-  const blob = new Blob([JSON.stringify(customers)], { type: "application/json" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "customers.json";
-  a.click();
-  URL.revokeObjectURL(url);
+function sendToSheets(data) {
+  fetch(webhookURL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  });
 }
 
 function importCustomers() {
-  const fileInput = document.getElementById("importFile");
-  const file = fileInput.files[0];
-  if (!file) return;
+  const input = document.getElementById("importFile");
   const reader = new FileReader();
   reader.onload = () => {
     customers = JSON.parse(reader.result);
     localStorage.setItem("customers", JSON.stringify(customers));
     renderCustomers();
   };
-  reader.readAsText(file);
+  reader.readAsText(input.files[0]);
+}
+
+function exportCustomers() {
+  const blob = new Blob([JSON.stringify(customers)], { type: "application/json" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "customers.json";
+  a.click();
 }
 
 function searchCustomers() {
-  const searchValue = document.getElementById("search").value.toLowerCase();
-  const rows = document.querySelectorAll("#customerTableBody tr");
-  rows.forEach(row => {
-    const text = row.innerText.toLowerCase();
-    row.style.display = text.includes(searchValue) ? "" : "none";
+  const q = document.getElementById("search").value.toLowerCase();
+  document.querySelectorAll("#customerTableBody tr").forEach(row => {
+    row.style.display = row.innerText.toLowerCase().includes(q) ? "" : "none";
   });
 }
 
-renderCustomers();
+// --- Service History ---
+function openHistory(key) {
+  currentKey = key;
+  const notes = history[key] || [];
+  const ul = document.getElementById("historyList");
+  ul.innerHTML = "";
+  notes.forEach(n => {
+    const li = document.createElement("li");
+    li.textContent = n;
+    ul.appendChild(li);
+  });
+  document.getElementById("historyNote").value = "";
+  document.getElementById("historyModal").style.display = "block";
+}
+
+function addHistoryNote() {
+  const note = document.getElementById("historyNote").value.trim();
+  if (!note) return;
+  if (!history[currentKey]) history[currentKey] = [];
+  history[currentKey].push(note);
+  localStorage.setItem("history", JSON.stringify(history));
+  openHistory(currentKey);
+}
+
+function closeHistory() {
+  document.getElementById("historyModal").style.display = "none";
+}
+
+window.onload = renderCustomers;
