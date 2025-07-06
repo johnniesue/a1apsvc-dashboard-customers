@@ -1,22 +1,16 @@
 body {
-  background-color: #121212;
-  color: #ffffff;
+  background-color: #111;
+  color: #fff;
   font-family: Arial, sans-serif;
-}
-.container {
-  width: 90%;
-  max-width: 800px;
-  margin: auto;
-  padding-top: 30px;
+  padding: 20px;
 }
 input, button {
-  width: 100%;
-  padding: 10px;
-  margin: 5px 0;
-  font-size: 1em;
+  margin: 5px;
+  padding: 8px;
 }
 button {
-  background-color: #007acc;
+  background-color: #28a745;
   color: white;
   border: none;
+  cursor: pointer;
 }

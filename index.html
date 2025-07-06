@@ -1,30 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>A-1 Customer Intake</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <title>Customer Intake Dashboard</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <h1>Customer Intake Dashboard</h1>
-    <form id="customerForm">
-      <input type="text" id="firstName" placeholder="First Name" required />
-      <input type="text" id="lastName" placeholder="Last Name" required />
-      <input type="text" id="company" placeholder="Company" />
-      <input type="text" id="address" placeholder="Address" />
-      <input type="text" id="mobile" placeholder="Mobile" />
-      <input type="text" id="home" placeholder="Home" />
-      <input type="text" id="work" placeholder="Work" />
-      <input type="email" id="email" placeholder="Email" />
-      <input type="text" id="type" placeholder="Customer Type" />
-      <input type="text" id="source" placeholder="Lead Source" />
-      <input type="text" id="notes" placeholder="Notes" />
-      <button type="submit">Save Customer</button>
-    </form>
-    <p id="responseMessage"></p>
-  </div>
+  <h1>Customer Intake Dashboard</h1>
+  <form id="customerForm">
+    <input type="text" id="firstName" placeholder="First Name" required>
+    <input type="text" id="lastName" placeholder="Last Name" required>
+    <input type="text" id="company" placeholder="Company">
+    <input type="text" id="address" placeholder="Address">
+    <input type="text" id="mobile" placeholder="Mobile">
+    <input type="text" id="home" placeholder="Home">
+    <input type="text" id="work" placeholder="Work">
+    <input type="email" id="email" placeholder="Email">
+    <input type="text" id="type" placeholder="Customer Type">
+    <input type="text" id="source" placeholder="Lead Source">
+    <input type="text" id="notes" placeholder="Notes">
+    <button type="submit">Save Customer</button>
+  </form>
+  <div id="responseMessage"></div>
   <script src="script.js"></script>
 </body>
 </html>

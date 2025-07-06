@@ -1,6 +1,5 @@
 document.getElementById("customerForm").addEventListener("submit", function(event) {
   event.preventDefault();
-
   const data = {
     "First Name": document.getElementById("firstName").value,
     "Last Name": document.getElementById("lastName").value,
@@ -15,8 +14,7 @@ document.getElementById("customerForm").addEventListener("submit", function(even
     "Notes": document.getElementById("notes").value,
     "Timestamp": new Date().toLocaleString()
   };
-
-  fetch("https://script.google.com/macros/s/AKfycbzZMZQdVnfQ9fDuu_aSB1yNAzzQGaHConTmYWnm9HGYeK-DlVjHZENsTJC0nTxZGsc7/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbyiIBViuKCv816QkHyOhwKX9g9YDKRIQ3f7d_Rgs7d0Q8bR0VFwWk8LrUog8ESxS2X7/exec", {
     method: "POST",
     mode: "no-cors",
     headers: {
