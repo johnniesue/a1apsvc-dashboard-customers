@@ -1,3 +1,6 @@
+
+const scriptURL = "https://script.google.com/macros/s/AKfycbyiIBViuKCv816QkHyOhwKX9g9YDKRIQ3f7d_Rgs7d0Q8bR0VFwWk8LrUog8ESxS2X7/exec";
+
 document.getElementById("customerForm").addEventListener("submit", function(event) {
   event.preventDefault();
   const data = {
@@ -14,17 +17,28 @@ document.getElementById("customerForm").addEventListener("submit", function(even
     "Notes": document.getElementById("notes").value,
     "Timestamp": new Date().toLocaleString()
   };
-  fetch("https://script.google.com/macros/s/AKfycbyiIBViuKCv816QkHyOhwKX9g9YDKRIQ3f7d_Rgs7d0Q8bR0VFwWk8LrUog8ESxS2X7/exec", {
+
+  fetch(scriptURL, {
     method: "POST",
     mode: "no-cors",
-    headers: {
-      "Content-Type": "application/json"
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data)
-  }).then(() => {
+  })
+  .then(() => {
     document.getElementById("responseMessage").textContent = "✅ Customer saved!";
+    appendCustomerToTable(data);
     document.getElementById("customerForm").reset();
-  }).catch(() => {
+  })
+  .catch(() => {
     document.getElementById("responseMessage").textContent = "❌ Failed to save customer.";
   });
 });
+
+function appendCustomerToTable(data) {
+  const table = document.getElementById("customerTable").querySelector("tbody");
+  const row = table.insertRow();
+  Object.values(data).forEach(value => {
+    const cell = row.insertCell();
+    cell.textContent = value;
+  });
+}
