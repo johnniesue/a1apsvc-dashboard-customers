@@ -62,16 +62,3 @@ function loadCustomers() {
 }
 
 loadCustomers();
-
-
-function initMap() {
-    const location = { lat: 33.0578, lng: -96.6609 }; // Default to Allen, TX
-    const map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 11,
-        center: location,
-    });
-    new google.maps.Marker({
-        position: location,
-        map: map,
-    });
-}
