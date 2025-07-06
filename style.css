@@ -1,40 +1,57 @@
+
 body {
-  background: #111;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #111;
   color: white;
-  font-family: Arial;
+}
+.sidebar {
+  background: #000;
+  width: 180px;
+  position: fixed;
+  height: 100%;
   padding: 20px;
 }
-input, button, textarea {
+.sidebar h2 {
+  color: #fff;
+}
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+.sidebar ul li {
+  margin: 20px 0;
+}
+.sidebar ul li a {
+  color: #4fc3f7;
+  text-decoration: none;
+}
+.main {
+  margin-left: 200px;
+  padding: 20px;
+}
+.form-row input {
   margin: 5px;
-  padding: 6px;
+  padding: 5px;
+}
+.form-row button {
+  margin: 5px;
 }
 table {
   width: 100%;
-  margin-top: 15px;
   border-collapse: collapse;
+  margin-top: 15px;
 }
 th, td {
-  border: 1px solid #444;
-  padding: 8px;
+  padding: 10px;
+  border: 1px solid #333;
 }
-.modal {
-  display: none;
-  position: fixed;
-  left: 0; top: 0; width: 100%; height: 100%;
-  background-color: rgba(0,0,0,0.85);
-  z-index: 1000;
-}
-.modal-content {
+th {
   background: #222;
-  margin: 10% auto;
-  padding: 20px;
-  width: 90%;
-  max-width: 500px;
-  border-radius: 5px;
 }
-.close {
-  float: right;
-  font-size: 24px;
-  cursor: pointer;
-  color: #aaa;
+td a {
+  color: #4fc3f7;
+}
+.button-row {
+  margin-top: 10px;
 }
