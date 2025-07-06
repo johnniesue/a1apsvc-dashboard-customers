@@ -1,39 +1,25 @@
 
 body {
-  font-family: Arial, sans-serif;
-  background: #121212;
-  color: #fff;
-  margin: 0;
-  padding: 20px;
+    background-color: #111;
+    color: white;
+    font-family: Arial, sans-serif;
+    padding: 20px;
 }
-.container {
-  max-width: 1000px;
-  margin: auto;
-}
-input, button {
-  display: block;
-  margin: 10px 0;
-  padding: 10px;
-}
-input {
-  width: 100%;
+form input, button {
+    margin: 4px;
+    padding: 6px;
 }
 button {
-  background: #4caf50;
-  color: white;
-  border: none;
-  cursor: pointer;
+    background-color: green;
+    color: white;
+    border: none;
 }
 table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
+    margin-top: 20px;
+    border-collapse: collapse;
+    width: 100%;
 }
 th, td {
-  border: 1px solid #555;
-  padding: 8px;
-  text-align: left;
-}
-th {
-  background: #333;
+    border: 1px solid white;
+    padding: 6px;
 }
