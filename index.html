@@ -1,46 +1,44 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Customer Intake Dashboard</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <h1>Customer Intake Dashboard</h1>
-
   <form id="customerForm">
     <input type="text" id="firstName" placeholder="First Name" required />
     <input type="text" id="lastName" placeholder="Last Name" required />
     <input type="text" id="company" placeholder="Company" />
-    <input type="text" id="address" placeholder="Address" required />
+    <input type="text" id="address" placeholder="Address" />
     <input type="text" id="mobile" placeholder="Mobile" />
     <input type="text" id="home" placeholder="Home" />
     <input type="text" id="work" placeholder="Work" />
     <input type="email" id="email" placeholder="Email" />
-    <input type="text" id="type" placeholder="Customer Type" />
-    <input type="text" id="source" placeholder="Lead Source" />
+    <input type="text" id="customerType" placeholder="Customer Type" />
+    <input type="text" id="leadSource" placeholder="Lead Source" />
     <input type="text" id="notes" placeholder="Notes" />
     <button type="submit">Save Customer</button>
   </form>
-
   <p id="responseMessage"></p>
-
   <h2>Submitted Customers</h2>
-  <table id="customerTable">
+  <table id="customerTable" border="1">
     <thead>
       <tr>
-        <th>First</th><th>Last</th><th>Company</th><th>Address</th><th>Mobile</th>
-        <th>Home</th><th>Work</th><th>Email</th><th>Type</th><th>Source</th>
-        <th>Notes</th><th>Timestamp</th>
+        <th>First</th><th>Last</th><th>Company</th><th>Address</th>
+        <th>Mobile</th><th>Home</th><th>Work</th><th>Email</th>
+        <th>Type</th><th>Source</th><th>Notes</th><th>Timestamp</th>
       </tr>
     </thead>
     <tbody></tbody>
   </table>
-
   <script src="script.js"></script>
-  <script
-    src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY_HERE&libraries=places&callback=initAutocomplete"
-    async defer></script>
+
+  <div id="map" style="height: 400px; width: 100%; margin-top: 20px;"></div>
+
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwP09_HDy1_u_VWDlZbz43CK_17aL-J4I&callback=initMap"></script>
 </body>
 </html>
