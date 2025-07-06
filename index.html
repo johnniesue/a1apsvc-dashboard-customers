@@ -2,53 +2,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Customer Intake Dashboard</title>
-  <link rel="stylesheet" href="style.css"/>
+    <meta charset="UTF-8">
+    <title>Customer Intake Dashboard</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="sidebar">
-    <h2>A-1 Plumbing</h2>
-    <ul>
-      <li><a href="#">Customers</a></li>
-      <li><a href="#">Jobs</a></li>
-      <li><a href="#">Estimates</a></li>
-      <li><a href="#">Invoices</a></li>
-    </ul>
-  </div>
-  <div class="main">
     <h1>Customer Intake Dashboard</h1>
-    <div class="form-row">
-      <input type="text" id="firstName" placeholder="First Name">
-      <input type="text" id="lastName" placeholder="Last Name">
-      <input type="text" id="company" placeholder="Company (Optional)">
-      <input type="text" id="address" placeholder="Address">
-      <input type="text" id="mobilePhone" placeholder="Mobile Phone">
-      <input type="text" id="homePhone" placeholder="Home Phone">
-      <input type="text" id="workPhone" placeholder="Work Phone">
-      <input type="email" id="email" placeholder="Email">
-      <input type="text" id="type" placeholder="Customer Type (Homeowner, etc)">
-      <input type="text" id="source" placeholder="Lead Source">
-      <input type="text" id="notes" placeholder="Notes">
-      <button id="saveCustomer">Save Customer</button>
-    </div>
-    <div class="button-row">
-      <button onclick="exportCustomers()">Export All Customers</button>
-      <input type="file" id="importFile" />
-      <button onclick="importCustomers()">Import Customers</button>
-    </div>
-    <table id="customerTable">
-      <thead>
-        <tr>
-          <th>First</th><th>Last</th><th>Company</th><th>Address</th>
-          <th>Mobile</th><th>Home</th><th>Work</th><th>Email</th>
-          <th>Type</th><th>Source</th><th>Notes</th><th>Actions</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-  </div>
-  <script src="script.js"></script>
+    <form id="customerForm">
+        <input type="text" id="firstName" placeholder="First Name" required>
+        <input type="text" id="lastName" placeholder="Last Name" required>
+        <input type="text" id="company" placeholder="Company">
+        <input type="text" id="address" placeholder="Address">
+        <input type="text" id="mobile" placeholder="Mobile Phone">
+        <input type="text" id="home" placeholder="Home Phone">
+        <input type="text" id="work" placeholder="Work Phone">
+        <input type="email" id="email" placeholder="Email">
+        <input type="text" id="type" placeholder="Customer Type">
+        <input type="text" id="source" placeholder="Lead Source">
+        <input type="text" id="notes" placeholder="Notes">
+        <button type="submit">Save Customer</button>
+    </form>
+    <div id="responseMessage"></div>
+    <script src="script.js"></script>
 </body>
 </html>
