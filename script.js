@@ -1,8 +1,5 @@
-
-const scriptURL = "https://script.google.com/macros/s/AKfycbyiIBViuKCv816QkHyOhwKX9g9YDKRIQ3f7d_Rgs7d0Q8bR0VFwWk8LrUog8ESxS2X7/exec";
-
-document.getElementById("customerForm").addEventListener("submit", function (e) {
-  e.preventDefault();
+document.getElementById("customerForm").addEventListener("submit", function (event) {
+  event.preventDefault();
   const data = {
     "First Name": document.getElementById("firstName").value,
     "Last Name": document.getElementById("lastName").value,
@@ -18,44 +15,36 @@ document.getElementById("customerForm").addEventListener("submit", function (e) 
     "Timestamp": new Date().toLocaleString()
   };
 
-  fetch(scriptURL, {
+  fetch("https://script.google.com/macros/s/AKfycbyiIBViuKCv816QkHyOhwKX9g9YDKRIQ3f7d_Rgs7d0Q8bR0VFwWk8LrUog8ESxS2X7/exec", {
     method: "POST",
     mode: "no-cors",
-    headers: {
-      "Content-Type": "application/json"
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data)
   })
-    .then(() => {
-      document.getElementById("responseMessage").textContent = "✅ Customer saved!";
-      document.getElementById("customerForm").reset();
-      setTimeout(loadCustomers, 500);
-    })
-    .catch(() => {
-      document.getElementById("responseMessage").textContent = "❌ Failed to save customer.";
-    });
+  .then(() => {
+    document.getElementById("responseMessage").textContent = "✅ Customer saved!";
+    document.getElementById("customerForm").reset();
+    setTimeout(loadCustomers, 1000);
+  })
+  .catch(() => {
+    document.getElementById("responseMessage").textContent = "❌ Failed to save customer.";
+  });
 });
 
 function loadCustomers() {
-  fetch(scriptURL)
-    .then(response => response.json())
+  fetch("https://opensheet.elk.sh/1OXs1quJSyRegLVuU5G96QVhcMrJygvxwBuCgA6_mwqI/Sheet1")
+    .then(res => res.json())
     .then(data => {
       const tbody = document.querySelector("#customerTable tbody");
       tbody.innerHTML = "";
       data.forEach(row => {
         const tr = document.createElement("tr");
-        [
-          "First Name", "Last Name", "Company", "Address", "Mobile", "Home",
-          "Work", "Email", "Type", "Source", "Notes", "Timestamp"
-        ].forEach(key => {
-          const td = document.createElement("td");
-          td.textContent = row[key] || "";
-          tr.appendChild(td);
-        });
+        tr.innerHTML = `<td>${row["First Name"]}</td><td>${row["Last Name"]}</td><td>${row.Company}</td>
+          <td>${row.Address}</td><td>${row.Mobile}</td><td>${row.Home}</td><td>${row.Work}</td>
+          <td>${row.Email}</td><td>${row.Type}</td><td>${row.Source}</td><td>${row.Notes}</td><td>${row.Timestamp}</td>`;
         tbody.appendChild(tr);
       });
     });
 }
 
-// Load customers on page load
-window.addEventListener("load", loadCustomers);
+window.onload = loadCustomers;
