@@ -1,33 +1,26 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Customer Intake Dashboard</title>
-  <link rel="stylesheet" href="style.css"/>
+  <title>A-1 Plumbing Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
-    <aside class="sidebar">
-      <h2>A-1 Plumbing</h2>
-      <nav>
-        <ul>
-          <li class="active"><span>Customers</span>
-            <ul class="submenu">
-              <li id="menu-customers" class="active">Customers</li>
-              <li>Jobs</li>
-              <li>Estimates</li>
-              <li>Invoices</li>
-            </ul>
-          </li>
-        </ul>
-      </nav>
-    </aside>
-
-    <main class="main">
+  <div class="sidebar">
+    <h2>A-1 Plumbing</h2>
+    <ul>
+      <li onclick="showView('customers')">Customers</li>
+      <li onclick="showView('jobs')">Jobs</li>
+      <li onclick="showView('estimates')">Estimates</li>
+      <li onclick="showView('invoices')">Invoices</li>
+    </ul>
+  </div>
+  <div class="main-content">
+    <div id="customers" class="view active">
       <h1>Customer Intake Dashboard</h1>
-      <div class="form-row">
+      <!-- customer form -->
+      <div class="form">
         <input type="text" id="firstName" placeholder="First Name">
         <input type="text" id="lastName" placeholder="Last Name">
         <input type="text" id="company" placeholder="Company (Optional)">
@@ -40,8 +33,12 @@
         <input type="text" id="source" placeholder="Lead Source">
         <input type="text" id="notes" placeholder="Notes">
         <button onclick="saveCustomer()">Save Customer</button>
+        <input type="file" id="importFile">
+        <button onclick="importCustomers()">Import Customers</button>
+        <button onclick="exportCustomers()">Export All Customers</button>
       </div>
-      <table id="customerTable">
+      <!-- table -->
+      <table>
         <thead>
           <tr>
             <th>First</th><th>Last</th><th>Company</th><th>Address</th>
@@ -49,12 +46,12 @@
             <th>Type</th><th>Source</th><th>Notes</th><th>Actions</th>
           </tr>
         </thead>
-        <tbody></tbody>
+        <tbody id="customerTableBody"></tbody>
       </table>
-      <button onclick="exportCustomers()">Export All Customers</button>
-      <input type="file" id="importFile" />
-      <button onclick="importCustomers()">Import Customers</button>
-    </main>
+    </div>
+    <div id="jobs" class="view"><h1>Jobs</h1><p>Coming soon...</p></div>
+    <div id="estimates" class="view"><h1>Estimates</h1><p>Coming soon...</p></div>
+    <div id="invoices" class="view"><h1>Invoices</h1><p>Coming soon...</p></div>
   </div>
   <script src="script.js"></script>
 </body>
