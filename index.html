@@ -1,5 +1,3 @@
-==============================================
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -51,8 +49,7 @@
                     
                     <div class="address-section">
                         <input type="text" id="address" placeholder="Service Address *" required />
-                        <div id="addressStatus" class="address-status"></div>
-                        <small>💡 Address will be verified automatically using Google Maps</small>
+                        <small>💡 Enter the complete service address including city and state</small>
                     </div>
                 </fieldset>
                 
@@ -94,11 +91,11 @@
                         
                         <select id="assignedTech">
                             <option value="">Assign Technician</option>
+                            <option value="Chris Crabtree">Chris Crabtree (Master Plumber)</option>
+                            <option value="Kian Crabtree">Kian Crabtree (Apprentice)</option>
                             <option value="Mike Johnson">Mike Johnson</option>
                             <option value="Steve Rodriguez">Steve Rodriguez</option>
                             <option value="Tom Wilson">Tom Wilson</option>
-                            <option value="Dave Miller">Dave Miller</option>
-                            <option value="Chris Brown">Chris Brown</option>
                         </select>
                         
                         <input type="datetime-local" id="scheduledDate" />
@@ -109,7 +106,7 @@
                             <option value="30 minutes">30 minutes</option>
                             <option value="1 hour">1 hour</option>
                             <option value="1.5 hours">1.5 hours</option>
-                            <option value="2 hours">2 hours</option>
+                            <option value="2 hours">2 hours (Standard)</option>
                             <option value="3 hours">3 hours</option>
                             <option value="4+ hours">4+ hours</option>
                             <option value="Full day">Full day</option>
@@ -119,7 +116,7 @@
                 
                 <fieldset class="notes-section">
                     <legend>Additional Information</legend>
-                    <textarea id="notes" placeholder="Job notes, special instructions, customer requests, etc." rows="4"></textarea>
+                    <textarea id="notes" placeholder="Job notes, special instructions, customer requests, problem description, etc." rows="4"></textarea>
                 </fieldset>
                 
                 <div class="form-actions">
@@ -135,11 +132,12 @@
         <section class="quick-actions mobile-section">
             <h3>📱 Quick Actions for Techs</h3>
             <div class="quick-buttons">
+                <button id="quickScheduled" class="quick-btn scheduled">📅 Mark Scheduled</button>
                 <button id="quickEnRoute" class="quick-btn en-route">🚗 I'm En Route</button>
                 <button id="quickInProgress" class="quick-btn in-progress">🔧 Job Started</button>
                 <button id="quickCompleted" class="quick-btn completed">✅ Job Complete</button>
             </div>
-            <div id="quickUpdateStatus" class="quick-status"></div>
+            <p class="quick-help">💡 Use these buttons for quick status updates. Select customers from the table below first.</p>
         </section>
         
         <section class="table-section">
@@ -164,43 +162,87 @@
                             <th>Created</th>
                             <th>Edit</th>
                             <th>Delete</th>
-                            <th>Quick Status</th>
-                            <th>Map</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Customer/Job data will be loaded here -->
+                        <tr>
+                            <td colspan="16" class="loading">Loading customer data...</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
         </section>
         
-        <section class="map-section">
-            <h2>🗺️ Service Area Map</h2>
-            <div id="map"></div>
-            <p class="map-help">
-                💡 <strong>Tips:</strong> 
-                • Addresses are automatically verified when you enter them<br>
-                • Click the 📍 Map button next to any job to see its location<br>
-                • Click anywhere on the map to get an address for that location
-            </p>
+        <!-- Status Legend -->
+        <section class="legend-section">
+            <h3>📊 Status Legend</h3>
+            <div class="status-legend">
+                <div class="legend-item">
+                    <span class="status-badge status-quote-requested">Quote Requested</span>
+                    <span>Customer needs pricing information</span>
+                </div>
+                <div class="legend-item">
+                    <span class="status-badge status-scheduled">Scheduled</span>
+                    <span>Appointment confirmed with customer</span>
+                </div>
+                <div class="legend-item">
+                    <span class="status-badge status-en-route">En Route</span>
+                    <span>Technician is traveling to job site</span>
+                </div>
+                <div class="legend-item">
+                    <span class="status-badge status-in-progress">In Progress</span>
+                    <span>Work is currently being performed</span>
+                </div>
+                <div class="legend-item">
+                    <span class="status-badge status-completed">Completed</span>
+                    <span>Job finished successfully</span>
+                </div>
+                <div class="legend-item">
+                    <span class="status-badge status-cancelled">Cancelled</span>
+                    <span>Job was cancelled by customer or company</span>
+                </div>
+            </div>
+        </section>
+        
+        <!-- System Info -->
+        <section class="info-section">
+            <h3>ℹ️ System Information</h3>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>🔥 Firebase Status</h4>
+                    <p>Real-time database for customer and job data</p>
+                    <div id="firebaseStatus" class="status-indicator">Connecting...</div>
+                </div>
+                <div class="info-card">
+                    <h4>📱 Mobile Friendly</h4>
+                    <p>Optimized for field technicians on mobile devices</p>
+                    <div class="status-indicator success">Ready</div>
+                </div>
+                <div class="info-card">
+                    <h4>🔒 Data Security</h4>
+                    <p>All customer data is securely stored and encrypted</p>
+                    <div class="status-indicator success">Protected</div>
+                </div>
+                <div class="info-card">
+                    <h4>🗺️ Maps Integration</h4>
+                    <p>Google Maps will be added in the next update</p>
+                    <div class="status-indicator pending">Coming Soon</div>
+                </div>
+            </div>
         </section>
     </main>
     
     <footer>
         <p>&copy; 2024 A-1 Affordable Plumbing Services - Professional Customer & Job Management System</p>
+        <p>📞 <strong>469-900-5194</strong> | 📧 <strong>johnniesue@a-1apsvc.com</strong> | 🏠 <strong>Lucas, TX</strong></p>
     </footer>
     
     <!-- Firebase SDK v9 (Compat version) -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-compat-firestore.js"></script>
     
-    <!-- Google Maps API with working key -->
-    <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBu-916DdpKAjTmJNIgngS6HL_kDIKU0aU&callback=initMap&libraries=places&v=weekly">
-    </script>
-    
-    <!-- Enhanced Customer & Job Management Script -->
+    <!-- Simplified Customer & Job Management Script -->
     <script src="script.js"></script>
 </body>
 </html>
+
