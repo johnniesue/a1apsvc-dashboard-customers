@@ -1,3 +1,5 @@
+==============================================
+
 // Enhanced Customer & Job Management System with Google Maps
 // A-1 Affordable Plumbing Services Dashboard
 
@@ -532,4 +534,3 @@ async function testFirebaseConnection() {
         return false;
     }
 }
-
