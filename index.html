@@ -4,146 +4,199 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A-1 Plumbing Customer & Job Management</title>
-    <link rel="stylesheet" href="style.css" />
-    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔧</text></svg>">
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Firebase SDK v9 -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-compat-firestore.js"></script>
 </head>
 <body>
-    <header>
-        <h1>🔧 A-1 Plumbing Customer & Job Management</h1>
-        <p>Professional Plumbing Services - Customer Intake & Job Tracking System</p>
-    </header>
-    
-    <main>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>🔧 A-1 Plumbing Customer & Job Management</h1>
+            <p class="subtitle">Professional Plumbing Services • Customer Intake & Job Tracking System</p>
+        </header>
+
+        <!-- Customer & Job Information Form -->
         <section class="form-section">
             <h2>Customer & Job Information</h2>
             
             <form id="customerForm">
-                <fieldset class="customer-info">
-                    <legend>Customer Information</legend>
-                    <div class="form-grid">
-                        <input type="text" id="firstName" placeholder="First Name *" required />
-                        <input type="text" id="lastName" placeholder="Last Name *" required />
-                        <input type="text" id="company" placeholder="Company" />
-                        <input type="email" id="email" placeholder="Email" />
-                        <input type="tel" id="mobile" placeholder="Mobile Phone" />
-                        <input type="tel" id="home" placeholder="Home Phone" />
-                        <input type="tel" id="work" placeholder="Work Phone" />
-                        <select id="customerType">
-                            <option value="">Customer Type</option>
-                            <option value="Residential">Residential</option>
-                            <option value="Commercial">Commercial</option>
-                            <option value="Emergency">Emergency</option>
-                            <option value="Maintenance">Maintenance Contract</option>
-                        </select>
-                        <select id="leadSource">
-                            <option value="">Lead Source</option>
-                            <option value="Google">Google Search</option>
-                            <option value="Referral">Referral</option>
-                            <option value="Facebook">Facebook</option>
-                            <option value="Yelp">Yelp</option>
-                            <option value="Repeat Customer">Repeat Customer</option>
-                            <option value="Yellow Pages">Yellow Pages</option>
-                            <option value="Other">Other</option>
-                        </select>
+                <!-- Customer Information -->
+                <div class="form-group-section">
+                    <h3>Customer Information</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name *</label>
+                            <input type="text" id="firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name *</label>
+                            <input type="text" id="lastName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="company">Company</label>
+                            <input type="text" id="company">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email">
+                        </div>
                     </div>
                     
-                    <div class="address-section">
-                        <input type="text" id="address" placeholder="Service Address *" required />
-                        <small>💡 Enter the complete service address including city and state</small>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="mobilePhone">Mobile Phone</label>
+                            <input type="tel" id="mobilePhone">
+                        </div>
+                        <div class="form-group">
+                            <label for="homePhone">Home Phone</label>
+                            <input type="tel" id="homePhone">
+                        </div>
+                        <div class="form-group">
+                            <label for="workPhone">Work Phone</label>
+                            <input type="tel" id="workPhone">
+                        </div>
+                        <div class="form-group">
+                            <label for="customerType">Customer Type</label>
+                            <select id="customerType">
+                                <option value="">Select Type</option>
+                                <option value="residential">Residential</option>
+                                <option value="commercial">Commercial</option>
+                                <option value="property-manager">Property Manager</option>
+                                <option value="contractor">Contractor</option>
+                            </select>
+                        </div>
                     </div>
-                </fieldset>
-                
-                <fieldset class="job-info">
-                    <legend>Job Information</legend>
-                    <div class="form-grid">
-                        <select id="jobType">
-                            <option value="">Job Type</option>
-                            <option value="Drain Cleaning">Drain Cleaning</option>
-                            <option value="Leak Repair">Leak Repair</option>
-                            <option value="Water Heater">Water Heater Service</option>
-                            <option value="Toilet Repair">Toilet Repair</option>
-                            <option value="Faucet Repair">Faucet Repair</option>
-                            <option value="Pipe Repair">Pipe Repair</option>
-                            <option value="Emergency Service">Emergency Service</option>
-                            <option value="Installation">New Installation</option>
-                            <option value="Inspection">Inspection</option>
-                            <option value="Maintenance">Maintenance</option>
-                        </select>
-                        
-                        <select id="jobPriority">
-                            <option value="">Priority Level</option>
-                            <option value="Low">Low</option>
-                            <option value="Normal">Normal</option>
-                            <option value="High">High</option>
-                            <option value="Emergency">Emergency</option>
-                        </select>
-                        
-                        <select id="jobStatus">
-                            <option value="">Job Status</option>
-                            <option value="Quote Requested">Quote Requested</option>
-                            <option value="Scheduled">Scheduled</option>
-                            <option value="En Route">En Route</option>
-                            <option value="In Progress">In Progress</option>
-                            <option value="Completed">Completed</option>
-                            <option value="Cancelled">Cancelled</option>
-                            <option value="Follow-up Required">Follow-up Required</option>
-                        </select>
-                        
-                        <select id="assignedTech">
-                            <option value="">Assign Technician</option>
-                            <option value="Chris Crabtree">Chris Crabtree (Master Plumber)</option>
-                            <option value="Kian Crabtree">Kian Crabtree (Apprentice)</option>
-                            <option value="Mike Johnson">Mike Johnson</option>
-                            <option value="Steve Rodriguez">Steve Rodriguez</option>
-                            <option value="Tom Wilson">Tom Wilson</option>
-                        </select>
-                        
-                        <input type="datetime-local" id="scheduledDate" />
-                        <label for="scheduledDate" class="field-label">Scheduled Date & Time</label>
-                        
-                        <select id="estimatedDuration">
-                            <option value="">Estimated Duration</option>
-                            <option value="30 minutes">30 minutes</option>
-                            <option value="1 hour">1 hour</option>
-                            <option value="1.5 hours">1.5 hours</option>
-                            <option value="2 hours">2 hours (Standard)</option>
-                            <option value="3 hours">3 hours</option>
-                            <option value="4+ hours">4+ hours</option>
-                            <option value="Full day">Full day</option>
-                        </select>
+                    
+                    <div class="form-row">
+                        <div class="form-group full-width">
+                            <label for="leadSource">Lead Source</label>
+                            <input type="text" id="leadSource" placeholder="How did they find us?">
+                        </div>
                     </div>
-                </fieldset>
-                
-                <fieldset class="notes-section">
-                    <legend>Additional Information</legend>
-                    <textarea id="notes" placeholder="Job notes, special instructions, customer requests, problem description, etc." rows="4"></textarea>
-                </fieldset>
-                
-                <div class="form-actions">
-                    <button type="submit" id="submitBtn" class="primary-btn">💾 Save Customer & Job</button>
-                    <button type="button" id="cancelEdit" class="secondary-btn" style="display: none;">❌ Cancel Edit</button>
+                    
+                    <div class="form-row">
+                        <div class="form-group full-width">
+                            <label for="serviceAddress">Service Address *</label>
+                            <input type="text" id="serviceAddress" placeholder="Enter the complete service address including city and state" required>
+                            <small>💡 Start typing for address suggestions, or click on the map below</small>
+                        </div>
+                    </div>
+                    
+                    <!-- Address Status -->
+                    <div id="addressStatus" class="address-status"></div>
                 </div>
+
+                <!-- Job Information -->
+                <div class="form-group-section">
+                    <h3>Job Information</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="jobType">Job Type</label>
+                            <select id="jobType">
+                                <option value="">Select Job Type</option>
+                                <option value="leak-repair">Leak Repair</option>
+                                <option value="drain-cleaning">Drain Cleaning</option>
+                                <option value="water-heater">Water Heater Service</option>
+                                <option value="toilet-repair">Toilet Repair/Install</option>
+                                <option value="faucet-repair">Faucet Repair/Install</option>
+                                <option value="sewer-line">Sewer Line Service</option>
+                                <option value="gas-line">Gas Line Service</option>
+                                <option value="inspection">Plumbing Inspection</option>
+                                <option value="emergency">Emergency Service</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="priority">Priority Level</label>
+                            <select id="priority">
+                                <option value="normal">Normal</option>
+                                <option value="high">High</option>
+                                <option value="emergency">Emergency</option>
+                                <option value="low">Low</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="jobStatus">Job Status</label>
+                            <select id="jobStatus">
+                                <option value="quote">Quote Requested</option>
+                                <option value="scheduled">Scheduled</option>
+                                <option value="enroute">En Route</option>
+                                <option value="inprogress">In Progress</option>
+                                <option value="completed">Completed</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="assignedTech">Assign Technician</label>
+                            <select id="assignedTech">
+                                <option value="">Select Technician</option>
+                                <option value="Chris Crabtree">Chris Crabtree</option>
+                                <option value="Kian Crabtree">Kian Crabtree</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="scheduledDate">Scheduled Date & Time</label>
+                            <input type="datetime-local" id="scheduledDate">
+                        </div>
+                        <div class="form-group">
+                            <label for="estimatedDuration">Estimated Duration</label>
+                            <select id="estimatedDuration">
+                                <option value="">Select Duration</option>
+                                <option value="1 hour">1 hour</option>
+                                <option value="2 hours">2 hours</option>
+                                <option value="3 hours">3 hours</option>
+                                <option value="4 hours">4 hours</option>
+                                <option value="Half day">Half day</option>
+                                <option value="Full day">Full day</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Information -->
+                <div class="form-group-section">
+                    <h3>Additional Information</h3>
+                    <div class="form-group">
+                        <label for="notes">Job Notes, Special Instructions, Customer Requests, Problem Description, etc.</label>
+                        <textarea id="notes" rows="4" placeholder="Describe the plumbing issue, special access requirements, customer preferences, etc."></textarea>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">💾 Save Customer & Job</button>
             </form>
-            
-            <div id="responseMessage" class="response-message"></div>
         </section>
-        
-        <!-- Quick Actions for Mobile Techs -->
-        <section class="quick-actions mobile-section">
-            <h3>📱 Quick Actions for Techs</h3>
-            <div class="quick-buttons">
-                <button id="quickScheduled" class="quick-btn scheduled">📅 Mark Scheduled</button>
-                <button id="quickEnRoute" class="quick-btn en-route">🚗 I'm En Route</button>
-                <button id="quickInProgress" class="quick-btn in-progress">🔧 Job Started</button>
-                <button id="quickCompleted" class="quick-btn completed">✅ Job Complete</button>
+
+        <!-- Google Maps Section -->
+        <section class="map-section">
+            <h3>📍 Service Area Map</h3>
+            <p>Click on the map to get an address, or view customer locations</p>
+            <div id="map" class="map-container"></div>
+        </section>
+
+        <!-- Quick Actions for Techs -->
+        <section class="quick-actions">
+            <h3>🚀 Quick Actions for Techs</h3>
+            <p>Use these buttons for quick status updates. Select customers from the table below first.</p>
+            <div class="action-buttons">
+                <button id="markScheduled" class="action-btn scheduled">📅 Mark Scheduled</button>
+                <button id="markEnRoute" class="action-btn enroute">🚗 I'm En Route</button>
+                <button id="markStarted" class="action-btn inprogress">🔧 Job Started</button>
+                <button id="markComplete" class="action-btn completed">✅ Job Complete</button>
             </div>
-            <p class="quick-help">💡 Use these buttons for quick status updates. Select customers from the table below first.</p>
         </section>
-        
-        <section class="table-section">
+
+        <!-- Customer & Job Records -->
+        <section class="records-section">
             <h2>📋 Customer & Job Records</h2>
+            
             <div class="table-container">
-                <table id="customerTable">
+                <table id="customersTable">
                     <thead>
                         <tr>
                             <th>First Name</th>
@@ -161,87 +214,88 @@
                             <th>Notes</th>
                             <th>Created</th>
                             <th>Edit</th>
-                            <th>Delete</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td colspan="16" class="loading">Loading customer data...</td>
+                            <td colspan="15" class="loading">Loading customer data...</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </section>
-        
+
         <!-- Status Legend -->
         <section class="legend-section">
             <h3>📊 Status Legend</h3>
             <div class="status-legend">
                 <div class="legend-item">
-                    <span class="status-badge status-quote-requested">Quote Requested</span>
-                    <span>Customer needs pricing information</span>
+                    <span class="status-badge quote">Quote Requested</span>
+                    <span class="description">Customer needs pricing information</span>
                 </div>
                 <div class="legend-item">
-                    <span class="status-badge status-scheduled">Scheduled</span>
-                    <span>Appointment confirmed with customer</span>
+                    <span class="status-badge scheduled">Scheduled</span>
+                    <span class="description">Appointment confirmed with customer</span>
                 </div>
                 <div class="legend-item">
-                    <span class="status-badge status-en-route">En Route</span>
-                    <span>Technician is traveling to job site</span>
+                    <span class="status-badge enroute">En Route</span>
+                    <span class="description">Technician is on the way</span>
                 </div>
                 <div class="legend-item">
-                    <span class="status-badge status-in-progress">In Progress</span>
-                    <span>Work is currently being performed</span>
+                    <span class="status-badge inprogress">In Progress</span>
+                    <span class="description">Work is currently being performed</span>
                 </div>
                 <div class="legend-item">
-                    <span class="status-badge status-completed">Completed</span>
-                    <span>Job finished successfully</span>
-                </div>
-                <div class="legend-item">
-                    <span class="status-badge status-cancelled">Cancelled</span>
-                    <span>Job was cancelled by customer or company</span>
+                    <span class="status-badge completed">Completed</span>
+                    <span class="description">Job finished successfully</span>
                 </div>
             </div>
         </section>
-        
-        <!-- System Info -->
-        <section class="info-section">
-            <h3>ℹ️ System Information</h3>
+
+        <!-- System Information -->
+        <section class="system-info">
+            <h3>🔧 System Information</h3>
+            
             <div class="info-grid">
-                <div class="info-card">
+                <div class="info-item">
                     <h4>🔥 Firebase Status</h4>
                     <p>Real-time database for customer and job data</p>
-                    <div id="firebaseStatus" class="status-indicator">Connecting...</div>
+                    <span class="status-indicator">Connecting...</span>
                 </div>
-                <div class="info-card">
+                
+                <div class="info-item">
                     <h4>📱 Mobile Friendly</h4>
                     <p>Optimized for field technicians on mobile devices</p>
-                    <div class="status-indicator success">Ready</div>
+                    <span class="status-indicator ready">Ready</span>
                 </div>
-                <div class="info-card">
+                
+                <div class="info-item">
                     <h4>🔒 Data Security</h4>
                     <p>All customer data is securely stored and encrypted</p>
-                    <div class="status-indicator success">Protected</div>
+                    <span class="status-indicator ready">Protected</span>
                 </div>
-                <div class="info-card">
+                
+                <div class="info-item">
                     <h4>🗺️ Maps Integration</h4>
-                    <p>Google Maps will be added in the next update</p>
-                    <div class="status-indicator pending">Coming Soon</div>
+                    <p>Google Maps with address verification and location mapping</p>
+                    <span class="status-indicator ready">Active</span>
                 </div>
             </div>
         </section>
-    </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2025 A-1 Affordable Plumbing Services • Professional Customer & Job Management System</p>
+            <p>📞 469-900-5194 • 📧 johnniesue@a-1apsvc.com • License: M-43801</p>
+        </footer>
+    </div>
+
+    <!-- Load Google Maps API with Places library -->
+    <script async defer 
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwP09_HDy1_u_VWDlZbz43CK_17aL-J4I&libraries=places&callback=initializeGoogleMaps">
+    </script>
     
-    <footer>
-        <p>&copy; 2024 A-1 Affordable Plumbing Services - Professional Customer & Job Management System</p>
-        <p>📞 <strong>469-900-5194</strong> | 📧 <strong>johnniesue@a-1apsvc.com</strong> | 🏠 <strong>Lucas, TX</strong></p>
-    </footer>
-    
-    <!-- Firebase SDK v9 (Compat version) -->
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-compat-firestore.js"></script>
-    
-    <!-- Simplified Customer & Job Management Script -->
+    <!-- Load our custom script -->
     <script src="script.js"></script>
 </body>
 </html>
