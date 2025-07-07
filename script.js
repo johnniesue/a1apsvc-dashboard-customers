@@ -1,64 +1,60 @@
-
-const scriptURL = "https://script.google.com/macros/s/AKfycbyiIBViuKCv816QkHyOhwKX9g9YDKRIQ3f7d_Rgs7d0Q8bR0VFwWk8LrUog8ESxS2X7/exec";
-const sheetURL = "https://opensheet.elk.sh/1OXs1quJSyRegLVuU5G96QVhcMrJygvxwBuCgA6_mwqI/Sheet1";
-
+const scriptURL = "https://script.google.com/macros/s/AKfycbYourWebhookID/exec";
 document.getElementById("customerForm").addEventListener("submit", function(event) {
-  event.preventDefault();
-  const data = {
-    "First Name": document.getElementById("firstName").value,
-    "Last Name": document.getElementById("lastName").value,
-    "Company": document.getElementById("company").value,
-    "Address": document.getElementById("address").value,
-    "Mobile": document.getElementById("mobile").value,
-    "Home": document.getElementById("home").value,
-    "Work": document.getElementById("work").value,
-    "Email": document.getElementById("email").value,
-    "Type": document.getElementById("customerType").value,
-    "Source": document.getElementById("leadSource").value,
-    "Notes": document.getElementById("notes").value,
-    "Timestamp": new Date().toLocaleString()
-  };
-
-  fetch(scriptURL, {
-    method: "POST",
-    mode: "no-cors",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data)
-  })
-  .then(() => {
-    document.getElementById("responseMessage").textContent = "✅ Customer saved!";
-    document.getElementById("customerForm").reset();
-    loadCustomers();
-  })
-  .catch(() => {
-    document.getElementById("responseMessage").textContent = "❌ Failed to save customer.";
-  });
+    event.preventDefault();
+    const data = {
+        firstName: document.getElementById("firstName").value,
+        lastName: document.getElementById("lastName").value,
+        company: document.getElementById("company").value,
+        address: document.getElementById("address").value,
+        mobile: document.getElementById("mobile").value,
+        home: document.getElementById("home").value,
+        work: document.getElementById("work").value,
+        email: document.getElementById("email").value,
+        customerType: document.getElementById("customerType").value,
+        leadSource: document.getElementById("leadSource").value,
+        notes: document.getElementById("notes").value,
+        timestamp: new Date().toLocaleString()
+    };
+    fetch(scriptURL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+    })
+    .then(res => {
+        document.getElementById("responseMessage").textContent = "✅ Customer saved!";
+        document.getElementById("customerForm").reset();
+        loadCustomers();
+    })
+    .catch(() => {
+        document.getElementById("responseMessage").textContent = "❌ Failed to save customer.";
+    });
 });
 
 function loadCustomers() {
-  fetch(sheetURL)
-    .then((res) => res.json())
-    .then((rows) => {
-      const tbody = document.querySelector("#customerTable tbody");
-      tbody.innerHTML = "";
-      rows.forEach((row) => {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td>${row["First Name"] || ""}</td>
-          <td>${row["Last Name"] || ""}</td>
-          <td>${row["Company"] || ""}</td>
-          <td>${row["Address"] || ""}</td>
-          <td>${row["Mobile"] || ""}</td>
-          <td>${row["Home"] || ""}</td>
-          <td>${row["Work"] || ""}</td>
-          <td>${row["Email"] || ""}</td>
-          <td>${row["Type"] || ""}</td>
-          <td>${row["Source"] || ""}</td>
-          <td>${row["Notes"] || ""}</td>
-          <td>${row["Timestamp"] || ""}</td>`;
-        tbody.appendChild(tr);
-      });
+    fetch(scriptURL)
+        .then(res => res.json())
+        .then(data => {
+            const tbody = document.querySelector("#customerTable tbody");
+            tbody.innerHTML = "";
+            data.forEach(row => {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td>${row.firstName || ""}</td><td>${row.lastName || ""}</td><td>${row.company || ""}</td>
+                    <td>${row.address || ""}</td><td>${row.mobile || ""}</td><td>${row.home || ""}</td>
+                    <td>${row.work || ""}</td><td>${row.email || ""}</td><td>${row.customerType || ""}</td>
+                    <td>${row.leadSource || ""}</td><td>${row.notes || ""}</td><td>${row.timestamp || ""}</td>`;
+                tbody.appendChild(tr);
+            });
+        });
+}
+
+function initMap() {
+    const location = { lat: 33.1, lng: -96.6 };  // Allen, TX
+    const map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 10,
+        center: location
     });
+    new google.maps.Marker({ position: location, map: map });
 }
 
 loadCustomers();

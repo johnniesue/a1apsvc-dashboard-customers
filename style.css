@@ -1,25 +1,26 @@
 
 body {
-  font-family: Arial, sans-serif;
-  background-color: #111;
-  color: #fff;
-  padding: 20px;
+    font-family: Arial, sans-serif;
+    background: #111;
+    color: white;
+    padding: 20px;
 }
 input, button {
-  margin: 5px;
+    margin: 5px;
+    padding: 8px;
 }
 button {
-  background-color: green;
-  color: white;
-  padding: 5px 10px;
+    background: green;
+    color: white;
+    border: none;
 }
 table {
-  margin-top: 20px;
-  width: 100%;
-  border-collapse: collapse;
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
 }
 th, td {
-  border: 1px solid #ccc;
-  padding: 5px;
-  text-align: left;
+    border: 1px solid white;
+    padding: 5px;
+    text-align: left;
 }
