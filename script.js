@@ -16,16 +16,16 @@ const realtimeDB = getDatabase();
 import { ref, set, onValue } from "firebase/database";
 
 // Write a test value
-set(ref(db, "status"), "Connected");
+set(ref(realtimeDB, "status"), "Connected");
 
 // Read and update UI
-onValue(ref(db, "status"), (snapshot) => {
+onValue(ref(realtimeDB, "status"), (snapshot) => {
   const status = snapshot.val();
   document.getElementById("firebase-status").textContent = status || "No status";
 });
 
 
-console.log("Firebase DB:", db);
+console.log("Firebase DB:", realtimeDB);
 
 
 // Google Maps Configuration
