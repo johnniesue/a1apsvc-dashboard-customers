@@ -11,10 +11,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-
-import { getDatabase } from "firebase/database";
-const db = getDatabase();
+const realtimeDB = getDatabase();
 
 import { ref, set, onValue } from "firebase/database";
 
