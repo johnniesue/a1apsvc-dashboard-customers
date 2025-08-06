@@ -14,22 +14,7 @@ firebase.initializeApp(firebaseConfig);
 const realtimeDB = firebase.database();
 const statusRef = realtimeDB.ref("status");
 
-statusRef.set("Connected");
-
-statusRef.on("value", (snapshot) => {
-  const status = snapshot.val();
-  document.getElementById("firebase-status").textContent = status || "No status";
-});
-
-// Write a test value
-set(ref(realtimeDB, "status"), "Connected");
-
-// Read and update UI
-onValue(ref(realtimeDB, "status"), (snapshot) => {
-  const status = snapshot.val();
-  document.getElementById("firebase-status").textContent = status || "No status";
-});
-
+statusRef.set("Connected")
 
 console.log("Firebase DB:", realtimeDB);
 
