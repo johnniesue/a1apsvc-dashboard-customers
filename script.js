@@ -16,6 +16,18 @@ const db = firebase.firestore();
 import { getDatabase } from "firebase/database";
 const db = getDatabase();
 
+import { ref, set, onValue } from "firebase/database";
+
+// Write a test value
+set(ref(db, "status"), "Connected");
+
+// Read and update UI
+onValue(ref(db, "status"), (snapshot) => {
+  const status = snapshot.val();
+  document.getElementById("firebase-status").textContent = status || "No status";
+});
+
+
 console.log("Firebase DB:", db);
 
 
