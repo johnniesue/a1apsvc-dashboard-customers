@@ -13,6 +13,12 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
+import { getDatabase } from "firebase/database";
+const db = getDatabase();
+
+console.log("Firebase DB:", db);
+
+
 // Google Maps Configuration
 const GOOGLE_MAPS_API_KEY = 'AIzaSyBwP09_HDy1_u_VWDlZbz43CK_17aL-J4I';
 let map;
