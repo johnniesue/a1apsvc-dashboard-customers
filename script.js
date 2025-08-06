@@ -12,8 +12,14 @@ const firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const realtimeDB = firebase.database();
+const statusRef = realtimeDB.ref("status");
 
-import { ref, set, onValue } from "firebase/database";
+statusRef.set("Connected");
+
+statusRef.on("value", (snapshot) => {
+  const status = snapshot.val();
+  document.getElementById("firebase-status").textContent = status || "No status";
+});
 
 // Write a test value
 set(ref(realtimeDB, "status"), "Connected");
