@@ -1,4 +1,5 @@
-// 🔥 Initialize Firebase
+s it look good?
+  // 🔥 Initialize Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyDeVLmKQXCMN_JZNwFL9OhfCQKVRHsVNy4",
   authDomain: "a1-customer-dashboard.firebaseapp.com",
@@ -13,7 +14,7 @@ firebase.initializeApp(firebaseConfig);
 
 // ✅ Enable Firebase App Check with reCAPTCHA v3
 const appCheck = firebase.appCheck();
-appCheck.activate('YOUR_SITE_KEY', true); // true = enable debug mode
+appCheck.activate(AIzaSyBYfL67I7HVg59KN6Js11FArvvgJXB9HZY); // true = enable debug mode
 
 
 // 🔄 Realtime Database listener
