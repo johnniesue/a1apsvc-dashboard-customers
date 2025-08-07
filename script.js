@@ -40,7 +40,6 @@ function initMap() {
 // 🚀 Load Google Maps dynamically
 function loadGoogleMaps() {
   const script = document.createElement("script");
-  script.src =
 script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyDeVLmKQXCMN_JZNwFL9OhfCQKVRHsVNy4&callback=initMap";
   script.async = true;
   script.defer = true;
