@@ -41,7 +41,7 @@ function initMap() {
 function loadGoogleMaps() {
   const script = document.createElement("script");
   script.src =
-    "https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap";
+script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyDeVLmKQXCMN_JZNwFL9OhfCQKVRHsVNy4&callback=initMap";
   script.async = true;
   script.defer = true;
   document.head.appendChild(script);
