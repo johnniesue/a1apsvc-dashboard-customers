@@ -11,6 +11,11 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
+// ✅ Enable Firebase App Check with reCAPTCHA v3
+const appCheck = firebase.appCheck();
+appCheck.activate('YOUR_SITE_KEY', true); // true = enable debug mode
+
+
 // 🔄 Realtime Database listener
 const realtimeDB = firebase.database();
 const statusRef = realtimeDB.ref("status");
