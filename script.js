@@ -16,6 +16,7 @@ firebase.initializeApp(firebaseConfig);
 const appCheck = firebase.appCheck();
 appCheck.activate('AIzaSyBYfL67I7HVg59KN6Js11FArvvgJXB9HZY', true);
 
+
 // 🔄 Realtime Database listener
 const realtimeDB = firebase.database();
 const statusRef = realtimeDB.ref("status");
