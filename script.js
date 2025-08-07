@@ -14,7 +14,8 @@ firebase.initializeApp(firebaseConfig);
 
 // ✅ Enable Firebase App Check with reCAPTCHA v3
 const appCheck = firebase.appCheck();
-appCheck.activate(AIzaSyBYfL67I7HVg59KN6Js11FArvvgJXB9HZY); // true = enable debug mode
+appCheck.activate('AIzaSyBYfL67I7HVg59KN6Js11FArvvgJXB9HZY', true);
+
 
 
 // 🔄 Realtime Database listener
