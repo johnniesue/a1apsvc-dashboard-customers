@@ -11,11 +11,11 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
+appCheck.activate('AIzaSyBYfL67I7HVg59KN6Js11FArvvgJXB9HZY', true);
+
 
 // ✅ Enable Firebase App Check with reCAPTCHA v3
 const appCheck = firebase.appCheck();
-appCheck.activate('AIzaSyBYfL67I7HVg59KN6Js11FArvvgJXB9HZY', true);
-
 
 // 🔄 Realtime Database listener
 const realtimeDB = firebase.database();
