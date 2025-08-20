@@ -1,0 +1,50 @@
+type User @table {
+  displayName: String!
+  role: String!
+  createdAt: Timestamp!
+  email: String
+  photoUrl: String
+  phoneNumber: String
+}
+
+type Customer @table {
+  firstName: String!
+  lastName: String!
+  phoneNumber: String!
+  address: String!
+  createdAt: Timestamp!
+  email: String
+  companyName: String
+  notes: String
+}
+
+type ServiceCall @table {
+  customer: Customer!
+  description: String!
+  status: String!
+  scheduledDate: Date!
+  createdAt: Timestamp!
+  assignedTo: User
+  priority: String
+  completionDate: Date
+  notes: String
+}
+
+type Invoice @table {
+  serviceCall: ServiceCall!
+  customer: Customer!
+  amount: Float!
+  status: String!
+  createdAt: Timestamp!
+  dueDate: Date
+  paymentDate: Date
+  notes: String
+}
+
+type Feedback @table {
+  serviceCall: ServiceCall!
+  customer: Customer!
+  rating: Int!
+  createdAt: Timestamp!
+  comment: String
+}
